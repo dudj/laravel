@@ -7,6 +7,7 @@ use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 DB::connection()->enableQueryLog();
 
@@ -109,7 +110,7 @@ class Controller extends BaseController
         $model = DB::table($table);
         for($i = 0;$i<count($where);$i++){
             if($where[$i]['relation'] == 'in'){
-                $model->whereIn($where[$i]['key'], [$where[$i]['val']]);
+                $model->whereIn($where[$i]['key'], explode(',',$where[$i]['val']));
             }else if($where[$i]['relation'] == 'like'){
                 $model->where($where[$i]['key'], $where[$i]['relation'], '%'.$where[$i]['val'].'%');
             }else{
@@ -117,6 +118,7 @@ class Controller extends BaseController
             }
         }
         $res = $model->delete();
+        Log::info('删除的SQL：',DB::getQueryLog());
         return $res;
     }
     /**
