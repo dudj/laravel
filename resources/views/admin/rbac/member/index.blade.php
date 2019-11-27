@@ -60,19 +60,22 @@
             var table = layui.table;
             //头工具栏事件
             table.on('toolbar(member)', function (obj) {
-                var checkStatus = table.checkStatus(obj.config.id);
                 switch (obj.event) {
                     case 'delAll':
-                        var checkStatus = table.checkStatus(obj.config.id)
-                        if(checkStatus == ""){
+                        var checkStatus = table.checkStatus(obj.config.id);
+                        var dataall='';
+                        data = checkStatus.data;
+                        for(var i=0;i<checkStatus.data.length;i++){
+                            dataall += data[i].id+",";
+                        }
+                        dataall = dataall.substring(0,dataall.length-1);
+                        if(dataall == ""){
                             layer.msg('请选择删除用户', {icon: 1});
                             return false;
                         }
-                        layer.alert(JSON.stringify(checkStatus.data));
-                        alert(checkStatus.data);return false;
-                        layer.confirm('确认要删除吗？'+chk_value,function(index){
+                        layer.confirm('确认要删除吗？'+dataall,function(index){
                             //捉到所有被选中的，发异步进行删除
-                            var resStatus = commonAjax('{{url('admin/group/del')}}','post',Base64.encode('id='+chk_value+'&type=more'),'json');
+                            var resStatus = commonAjax('{{url('admin/member/del')}}','post',Base64.encode('id='+dataall+'&type=more'),'json');
                             if(resStatus > 0){
                                 layer.msg('删除成功', {icon: 1});
                                 $(".layui-form-checked").not('.header').parents('tr').remove();
@@ -135,25 +138,6 @@
                 }
             });
         });
-        function delAll (argument) {
-            var chk_value =[];
-            $('input[name="id"]:checked').each(function(){
-                chk_value.push($(this).val());
-                $(this).removeClass('header');
-            });
-            if(chk_value == ""){
-                layer.msg('请选择删除用户', {icon: 1});
-                return false;
-            }
-            layer.confirm('确认要删除吗？'+chk_value,function(index){
-                //捉到所有被选中的，发异步进行删除
-                var resStatus = commonAjax('{{url('admin/group/del')}}','post',Base64.encode('id='+chk_value+'&type=more'),'json');
-                if(resStatus > 0){
-                    layer.msg('删除成功', {icon: 1});
-                    $(".layui-form-checked").not('.header').parents('tr').remove();
-                }
-            });
-        }
     </script>
 @endsection
 
