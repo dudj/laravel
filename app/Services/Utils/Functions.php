@@ -47,7 +47,8 @@ function getCommonController(){
 function getCommonMethod(){
     return [
         'store',
-        'update'
+        'update',
+        'index_json'
     ];
 }
 
