@@ -78,4 +78,24 @@ class CommonController extends Controller
             return $this->error('','上传方式有误');
         }
     }
+
+    /**
+     * @return mixed
+     * 修改密码
+     */
+    public function updatePwd(){
+        try{
+            $password = request()->get('password');
+            if(!preg_match('/^[a-zA-Z0-9_-]{6,12}$/',$password)){
+                return $this->error([],'密码规则为：6~12位的字母+数字');
+            }
+            $password = generatePassword($password,auth()->guard('admin')->user()->salt);
+            $res = $this->commonUpdate('admins',['password'=>$password],[['key'=>'id','relation'=>'=','val'=>auth()->guard('admin')->user()->id]]);
+            if($res){
+                return $this->success([],'修改成功');
+            }
+        }catch (\Exception $e){
+            return $this->error([],$e->getMessage());
+        }
+    }
 }

@@ -22,7 +22,7 @@ function commonAjax(url,type,data,datatype){
         success:function(result){
             console.log('success-result:'+result.code+";result.msg"+result.msg);
             if(result.code == 1){
-                layer.msg(result.msg,{icon: 5,time:1000});
+                layer.msg(result.msg,{icon: 6,time:1000});
                 resStatus = 1;
             }else{
                 layer.alert(result.msg,{icon: 5,time:1000});

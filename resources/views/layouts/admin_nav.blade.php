@@ -30,6 +30,29 @@
                     </dl>
                 </li>
             </ul>
+            <div class="layui-fluid" id="updatePwd" style="display: none">
+                <div class="layui-row">
+                    <div class="layui-form-item">
+                        <label for="newpass" class="layui-form-label">
+                            <span class="x-red">*</span>新密码
+                        </label>
+                        <div class="layui-input-inline">
+                            <input type="password" id="newpass" name="newpass" required="" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label for="repass" class="layui-form-label">
+                            <span class="x-red">*</span>确认密码
+                        </label>
+                        <div class="layui-input-inline">
+                            <input type="password" id="repass" name="repass" required="" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <button class="layui-btn" lay-submit="" onclick="updatePwd()">确认</button>
+                    </div>
+                </div>
+            </div>
             <ul class="layui-nav right" lay-filter="">
                 <li class="layui-nav-item">
                     {{ auth()->guard('admin')->user()->name }}
@@ -47,6 +70,9 @@
                             <a href="{{ url('/admin/common/clear')}}">清除缓存</a>
                         </dd>
                         <dd>
+                            <a onclick="openPwd()">修改密码</a>
+                        </dd>
+                        <dd>
                             <a href="{{ url('/admin/logout')}}">退出</a>
                         </dd>
                     </dl>
@@ -58,4 +84,39 @@
         </div>
         <!-- 顶部结束 -->
     </nav>
+    <script>
+        function openPwd() {
+            layer.open({
+                type: 1,
+                title:'修改密码',
+                shadeClose: true,
+                content: $('#updatePwd')
+            });
+        }
+        function updatePwd(){
+            var newpass = $('input[name="newpass"]').val();
+            var repass = $('input[name="repass"]').val();
+            if (newpass == '') {
+                layer.msg('请输入密码！', '{icon:5}');
+                return false;
+            }
+            if (repass == '') {
+                layer.msg('请在一次输入密码！', '{icon:5}');
+                return false;
+            }
+            if (newpass != repass) {
+                layer.msg('两次密码不一至！请重新输入', '{icon:5}');
+                return false;
+            }
+            var resStatus = commonAjax('{{url('admin/common/update_pwd')}}','post',Base64.encode(JSON.stringify('password='+newpass)),'json');
+            //发异步，把数据提交给php
+            if(resStatus > 0){
+                layer.alert("修改成功", {icon: 6},function () {
+                    $('input[name="newpass"]').val('');
+                    $('input[name="repass"]').val('');
+                    layer.closeAll();
+                });
+            }
+        }
+    </script>
 @endsection

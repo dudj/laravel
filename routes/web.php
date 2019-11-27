@@ -60,5 +60,6 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('/common/errors', 'Admin\CommonController@errors');
     Route::get('/common/clear', 'Admin\CommonController@clear');
     Route::post('/common/upload_img', 'Admin\CommonController@uploadImg');
+    Route::post('/common/update_pwd', 'Admin\CommonController@updatePwd');
 
 });
