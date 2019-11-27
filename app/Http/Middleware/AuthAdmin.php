@@ -37,6 +37,7 @@ class AuthAdmin
      * @param $nodeUrl
      * @return bool
      * 验证权限节点
+     * add和edit的权限拥有之后 store和update也有 反之
      */
     protected function checkNode($nodeUrl){
         if(empty($nodeUrl)){
@@ -46,7 +47,7 @@ class AuthAdmin
         $data = DB::table('access')->select('id')->where(['controller'=>$nodeArr[1],'method'=>$nodeArr[2]])->first();
         $nodestr = session('nodestr');
         $nodestr_arr = explode(',', $nodestr);
-        if(!in_array($data['id'], $nodestr_arr) && ($nodeArr[1] <> 'index' && $nodeArr[2] <> 'index') && $nodestr != 'all' && !in_array($nodeArr[1],getCommonController())){
+        if(!in_array($data['id'], $nodestr_arr) && ($nodeArr[1] <> 'index' && $nodeArr[2] <> 'index') && $nodestr != 'all' && !in_array($nodeArr[1],getCommonController()) && !in_array($nodeArr[2],getCommonMethod())){
             return false;
         }
         return true;

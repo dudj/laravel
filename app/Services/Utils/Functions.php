@@ -40,6 +40,16 @@ function getCommonController(){
         "common"
     ];
 }
+/**
+ * @return array
+ * 直接可以访问的方法 不受权限控制
+ */
+function getCommonMethod(){
+    return [
+        'store',
+        'update'
+    ];
+}
 
 /**
  * @param $password

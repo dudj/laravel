@@ -29,7 +29,7 @@ class SystemController extends Controller
             ->where($where)
             ->orderBy("s.id","desc")
             ->orderBy("s.order_by" ,"asc")
-            ->paginate(5);
+            ->paginate(10);
         $data->appends([
             'name' => $request->name,
             'id' => $request->id,
@@ -64,7 +64,7 @@ class SystemController extends Controller
             ->where('a.id','!=',1)
             ->orderBy("a.id","desc")
             ->orderBy("a.createtime" ,"desc")
-            ->paginate(5);
+            ->paginate(10);
         $data->appends([
             'name' => $request->name,
             'start' => $request->start,
@@ -92,7 +92,7 @@ class SystemController extends Controller
                 $query->where('createtime', '<=', $search);
             }
         };
-        $data = DB::table('group')->where($where)->where('id','!=',1)->orderBy("id","asc")->paginate(1);
+        $data = DB::table('group')->where($where)->where('id','!=',1)->orderBy("id","asc")->paginate(10);
         $data->appends([
             'name' => $request->name,
             'start' => $request->start,
