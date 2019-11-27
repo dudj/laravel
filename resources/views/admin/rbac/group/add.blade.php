@@ -15,6 +15,7 @@
                 <label class="layui-form-label">
                     权限
                 </label>
+                <div class="layui-form-mid layui-word-aux"><span class="x-red">*</span>层级必须明确，选择二级必须选择其父类，选择三级必须选择一二级的父类 例子：选择管理员删除，必须选择管理员管理(二级)和系统管理(一级)</div>
                 <table  class="layui-table layui-input-block">
                     <thead>
                         <tr>
@@ -123,6 +124,15 @@
                 form.render();
             }else{
                 $('.ids').attr('checked',false);
+                form.render();
+            }
+        });
+        form.on('checkbox(father)', function(data){
+            if(data.elem.checked){
+                $(data.elem).parent().siblings('td').find('input').prop("checked", true);
+                form.render();
+            }else{
+                $(data.elem).parent().siblings('td').find('input').prop("checked", false);
                 form.render();
             }
         });
