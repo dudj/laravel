@@ -15,6 +15,11 @@
 
     <script src="{{ asset('js/jquery.min.js') }}"></script>
     <script src="{{ asset('xadmin/lib/layui/layui.js') }}"></script>
+    <style>
+        .layui-form-checkbox i{
+            border-left:1px solid #d2d2d2;
+        }
+    </style>
 </head>
 <body class="login-bg">
 
@@ -27,7 +32,7 @@
         <hr class="hr15">
         <input name="password" lay-verify="required" placeholder="密码"  type="password" class="layui-input">
         <hr class="hr15">
-        <input name="remember"  type="checkbox" class="layui-input layui-form-checkbox">&nbsp;&nbsp;&nbsp;Remember Me
+        <input name="remember" type="checkbox" class="layui-input layui-form-checkbox">&nbsp;&nbsp;&nbsp;Remember Me
         <hr class="hr15">
         <input value="登录" lay-submit lay-filter="login" style="width:100%;" type="submit">
         <hr class="hr20" >
