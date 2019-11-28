@@ -11,10 +11,11 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+//前台路由
+Route::get('/', 'Home\IndexController@index');
 
+
+//后台路由
 Route::group(['prefix' => 'admin'], function () {
     Route::group(['middleware' => 'auth.admin'], function () {
         //经过路由验证的方法
