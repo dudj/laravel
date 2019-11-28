@@ -92,25 +92,6 @@ class MemberController extends Controller
 
     /**
      * @param Request $request
-     * @return mixed
-     * 改变状态
-     */
-    public function change_status(Request $request){
-        try{
-            $id = $request->get('id');
-            $status = $request->get('status');
-            $res = Group::findGroupAndUpdate($id,$status);
-            if($res['code'] == 1){
-                return $this->success([],$res['msg']);
-            }
-            return $this->error([],$res['msg']);
-        }catch (\Exception $e){
-            return $this->error([],$e->getMessage());
-        }
-    }
-
-    /**
-     * @param Request $request
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      * 渲染编辑页面
      */

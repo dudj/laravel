@@ -98,4 +98,14 @@ class CommonController extends Controller
             return $this->error([],$e->getMessage());
         }
     }
+
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * 用户信息
+     */
+    public function userInfo(){
+        return view('admin.common.user_info',[
+            'data' => auth()->guard('admin')->user()->getAttributes()
+        ]);
+    }
 }

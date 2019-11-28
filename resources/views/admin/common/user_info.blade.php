@@ -8,20 +8,20 @@
                     <table class="layui-table layui-form">
                         <thead>
                             <tr>
-                                <th>性别</th>
                                 <th>手机</th>
+                                <th>邮箱</th>
                                 <th>地址</th>
-                                <th>状态</th>
-                                <th>操作</th>
+                                <th>头像</th>
+                                <th>添加时间</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
-                                <th>性别</th>
-                                <th>手机</th>
-                                <th>地址</th>
-                                <th>状态</th>
-                                <th>操作</th>
+                                <th>{{$data['mobile']}}</th>
+                                <th>{{$data['mailbox']}}</th>
+                                <th>{{$data['address']}}</th>
+                                <th><img src="{{$data['logo']}}" width="150px"/></th>
+                                <th>{{date('Y-m-d H:i',$data['createtime'])}}</th>
                             </tr>
                         </tbody>
                     </table>

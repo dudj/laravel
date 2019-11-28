@@ -8,7 +8,5 @@ use App\Http\Controllers\Controller;
 
 class UserController extends Controller
 {
-    public function info(){
-        return view('admin.user_info');
-    }
+
 }

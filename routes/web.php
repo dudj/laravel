@@ -46,9 +46,7 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('/member/index_json', 'Admin\MemberController@indexJson');
         Route::post('/member/update', 'Admin\MemberController@update');//编辑
         //欢迎页
-        Route::get('welcome', 'Admin\IndexController@welcome')->name('admin.welcome');
-        //用户信息
-        Route::get('user_info', 'Admin\UserController@info')->name('admin.user_info');
+        Route::get('welcome', 'Admin\IndexController@welcome');
     });
     //登录路由相关
     Route::get('login', 'Admin\LoginController@showLoginForm')->name('admin.login');
@@ -61,5 +59,6 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('/common/clear', 'Admin\CommonController@clear');
     Route::post('/common/upload_img', 'Admin\CommonController@uploadImg');
     Route::post('/common/update_pwd', 'Admin\CommonController@updatePwd');
+    Route::get('common/user_info', 'Admin\CommonController@userInfo');
 
 });

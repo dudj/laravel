@@ -64,7 +64,7 @@
                     <dl class="layui-nav-child">
                         <!-- 二级菜单 -->
                         <dd>
-                            <a onclick="xadmin.open('个人信息','{{ url('/admin/user_info')}}',700,350)">个人信息</a>
+                            <a onclick="xadmin.open('个人信息','{{ url('/admin/common/user_info')}}',700,350)">个人信息</a>
                         </dd>
                         <dd>
                             <a href="{{ url('/admin/common/clear')}}">清除缓存</a>
