@@ -1,12 +1,20 @@
 laravel项目运行或者配置
+
 1.下载laravel的代码
+
 2.配置host和apache
+
 3.安装composer,加入系统命令（环境变量）
+
 4.在laravel源码目录下执行 composer update
+
 5.在源码目录下配置 config/app.php APP_DEBUG设置为true 代表debug模式开启
+
 6.确保源码根目录下有.env文件，没有则复制.env.example一份，重命名为.env
+
 7.生成key,命令行执行：php artisan key:generate
 生成key之后配置到.env文件
+
 
 
 此项目集成了layui+layer方式整合到laravel框架,目前做了简要的RBAC
