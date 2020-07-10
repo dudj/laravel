@@ -100,4 +100,12 @@ class SystemController extends Controller
         ]);
         return view('admin.rbac.group.index',['data'=>$data]);
     }
+
+    /**
+     * 监听 检测
+     */
+    public function loginTask(){
+        $time = time() - 3600; // 删除购物车数据  1小时以前的
+        DB::table("cart")->where('user_id', '=', 0)->where('add_time','<',$time)->delete();
+    }
 }

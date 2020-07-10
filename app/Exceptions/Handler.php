@@ -4,7 +4,9 @@ namespace App\Exceptions;
 
 use Exception;
 use Illuminate\Auth\AuthenticationException;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 class Handler extends ExceptionHandler
 {
@@ -44,6 +46,40 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
+        if ($exception) {
+            if($request->ajax()){
+                if($exception->getMessage()){
+                    return response()->json([
+                        'msg' => iconv('gbk','utf-8',$exception->getMessage()),
+                        'code' => 400
+                    ]);
+                }
+            }
+            $code = $exception->getCode();
+            if(isset($code) && $exception->getCode() >= 0 && $exception->getMessage()){
+                return response()->view('errors.503', [
+                    'message' => iconv('gbk','utf-8',$exception->getMessage()),
+                    'code' => $exception->getCode()
+                ]);
+            }
+            $showTemplate = 'error';
+            if(substr($exception->getStatusCode(),0,1) == 4){
+                $showTemplate = '404';
+                return response()->view('errors.'.$showTemplate, [
+                    'message' => iconv('gbk','utf-8',$exception->getMessage()),
+                    'code' => $exception->getStatusCode()
+                ],$exception->getStatusCode());
+            }else if (substr($exception->getStatusCode(),0,1) == 5){
+                $showTemplate = '503';
+                return response()->view('errors.'.$showTemplate, [
+                    'message' => iconv('gbk','utf-8',$exception->getMessage()),
+                    'code' => $exception->getStatusCode()
+                ],$exception->getStatusCode());
+            }
+            if(isset($code) && $exception->getCode() >= 0){
+                return parent::render($request, $exception);
+            }
+        }
         return parent::render($request, $exception);
     }
 

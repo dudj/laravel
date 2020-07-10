@@ -1,0 +1,12 @@
+.input-file-show{background-color:#FFF;vertical-align:top;display:inline-block;padding-left:26px;border:solid 1px #D7D7D7;border-radius:4px;position:relative;z-index:1}
+.input-file-show:hover{border-color:#148eff;-moz-box-shadow:0 0 5px rgba(20,142,255,0.5);-webkit-box-shadow:0 0 5px rgba(20,142,255,0.5);box-shadow:0 0 5px rgba(20,142,255,0.5)}
+.input-file-show span.show{width:22px;height:22px;text-align:center;padding:2px;position:absolute;z-index:2;top:0;left:0}
+.input-file-show span.show a{color:#AAA;display:block;width:22px;height:22px}
+.input-file-show:hover span.show a,.input-file-show span.show a:hover{color:#148eff;text-decoration:none}
+.input-file-show span.show i{font-size:14px;line-height:22px;display:block}
+.input-file-show span.show img{max-width:22px;max-height:22px}
+.type-file-box{display:block;width:262px;height:26px;position:relative;z-index:1}
+.type-file-text{line-height:26px!important;display:block;width:163px;height:26px!important;float:left!important;padding:0 !important;margin:0 !important;border:none 0 !important;border-radius:0 !important}
+.type-file-button,.type-file-button:focus{background-color:#E6E6E6;display:block;width:99px;height:26px;float:right !important;border:0;border-radius:0 3px 3px 0}
+.input-file-show:hover .type-file-button{color:#FFF;background-color:#148eff}
+.type-file-file{width:262px;height:26px;position:absolute;top:0;right:0;filter:alpha(opacity:0);opacity:0;cursor:pointer;}

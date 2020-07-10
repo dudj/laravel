@@ -12,14 +12,15 @@
                             $menuStr .=  '<ul class="sub-menu">';
                         }
                         foreach($menu as $key=>$val){
-                            $url = url('admin/'.$val['controller'].'/'.$val['method']);
                             $i = 1;
+                            $url = urlConnect('admin/right_menu',['id'=>$val['id']]);
                             if($level == 1){
                                 $menuStr.= '<li><a href="javascript:;"><i class="iconfont left-nav-li" lay-tips="'.$val['name'].'">'.$val['icon'].'</i><cite>'.$val['name'].'</cite><i class="iconfont nav_right">&#xe697;</i></a>';
                             }else{
                                 if($level == 2 && $i == 1 && isset($val['list']) && !empty($val['list'])){
                                     $menuStr.= '<li><a href="javascript:;"><i class="iconfont left-nav-li" lay-tips="'.$val['name'].'">'.$val['icon'].'</i><cite>'.$val['name'].'</cite><i class="iconfont nav_right">&#xe697;</i></a>';
                                 }else{
+                                    $url = url('admin/'.$val['controller'].'/'.$val['method']);
                                     $menuStr .=  '<li><a onclick="xadmin.add_tab(\''.$val['name'].'\',\''.$url.'\')"><i class="iconfont">'.$val['icon'].'</i><cite>'.$val['name'].'</cite></a>';
                                 }
                                 $i++;

@@ -23,6 +23,9 @@ body{
 .x-red{
     color: red;
 }
+.x-blue{
+    color: blue;
+}
 
 .layui-form-switch{
     margin-top: 0px;

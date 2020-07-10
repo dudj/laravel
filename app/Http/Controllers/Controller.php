@@ -25,6 +25,17 @@ class Controller extends BaseController
         self::getAllMenuSon($nodeData);
         return $nodeData;
     }
+
+    /**
+     * @param $parent_id
+     * @return mixed
+     * 获取某一个节点的所有子节点
+     */
+    public static function getOneMenu($parent_id){
+        $nodeData = DB::table('access')->where('parent_id','=',$parent_id)->orderBy('order_by')->get()->toArray();
+        self::getAllMenuSon($nodeData);
+        return $nodeData;
+    }
     public static function getAllMenuSon(&$nodeData){
         foreach ($nodeData as $key => $value) {
             $query = DB::table('access');
@@ -34,7 +45,6 @@ class Controller extends BaseController
         }
         return $nodeData;
     }
-
     /**
      * @param $data
      * @param $msg

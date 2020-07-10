@@ -13,7 +13,7 @@
 						</span>
                         </div>
                         <div class="col-2-4">
-                            <div id="logo"><a href="index.html"><img src="home/images/logo.png" /></a></div>
+                            <div id="logo"><a href="/"><img src="/home/images/logo.png" /></a></div>
                         </div>
                         <div class="col-1-4">
 						<span class="contact-info right">
@@ -28,97 +28,23 @@
             <!---Top Menu--->
             <div id="cssmenu" >
                 <ul>
-                    <li class="active"><a href="index.html"><span>zHairSalon</span></a></li>
-                    <li class="has-sub"><a href="#"><span>Category</span></a>
-                        <ul>
-                            <li class="has-sub"><a href="#"><span>Item 1</span></a>
-                                <ul>
-                                    <li><a href="#"><span>Sub Item</span></a></li>
-                                    <li class="last"><a href="#"><span>Sub Item</span></a></li>
-                                </ul>
-                            </li>
-                            <li class="has-sub"><a href="#"><span>Item 2</span></a>
-                                <ul>
-                                    <li><a href="#"><span>Sub Item</span></a></li>
-                                    <li class="last"><a href="#"><span>Sub Item</span></a></li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </li>
-                    <li><a href="archive.html"><span>Archive</span></a></li>
-                    <li><a href="single.html"><span>About</span></a></li>
-                    <li class="last"><a href="contact.html"><span>Contact</span></a></li>
+                    <li class="active"><a href="{{url('/')}}"><span>首页</span></a></li>
+                    <li class="last"><a href="{{url('common/contact')}}"><span>联系我们</span></a></li>
                 </ul>
             </div>
-            <!---Owl Slide--->
-            <div id="owl-slide" class="owl-carousel">
-                <div class="item">
-                    <img src="home/images/slider-1.jpg" />
-                    <div class="carousel-caption">
-                        <div class="carousel-caption-inner">
-                            <p class="carousel-caption-title"><a href="#">How to Take Care for Hair in the Summer</a></p>
-                            <p class="carousel-caption-category"><a href="#" rel="category tag">Business</a>,
-                                <a href="#" rel="category tag">Lifestyle</a>, <a href="#" rel="category tag">Pursuits</a>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <div class="item">
-                    <img src="home/images/slider-2.jpg" />
-                    <div class="carousel-caption">
-                        <div class="carousel-caption-inner">
-                            <p class="carousel-caption-title"><a href="#">How to Take Care for Hair in the Summer</a></p>
-                            <p class="carousel-caption-category"><a href="#" rel="category tag">Business</a>,
-                                <a href="#" rel="category tag">Lifestyle</a>, <a href="#" rel="category tag">Pursuits</a>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <div class="item">
-                    <img src="home/images/slider-3.jpg" />
-                    <div class="carousel-caption">
-                        <div class="carousel-caption-inner">
-                            <p class="carousel-caption-title"><a href="#">How to Take Care for Hair in the Summer</a></p>
-                            <p class="carousel-caption-category"><a href="#" rel="category tag">Business</a>,
-                                <a href="#" rel="category tag">Lifestyle</a>, <a href="#" rel="category tag">Pursuits</a>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <div class="item">
-                    <img src="home/images/slider-4.jpg" />
-                    <div class="carousel-caption">
-                        <div class="carousel-caption-inner">
-                            <p class="carousel-caption-title"><a href="#">How to Take Care for Hair in the Summer</a></p>
-                            <p class="carousel-caption-category"><a href="#" rel="category tag">Business</a>,
-                                <a href="#" rel="category tag">Lifestyle</a>, <a href="#" rel="category tag">Pursuits</a>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <div class="item">
-                    <img src="home/images/slider-5.jpg" />
-                    <div class="carousel-caption">
-                        <div class="carousel-caption-inner">
-                            <p class="carousel-caption-title"><a href="#">How to Take Care for Hair in the Summer</a></p>
-                            <p class="carousel-caption-category"><a href="#" rel="category tag">Business</a>,
-                                <a href="#" rel="category tag">Lifestyle</a>, <a href="#" rel="category tag">Pursuits</a>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <div class="item">
-                    <img src="home/images/slider-6.jpg" />
-                    <div class="carousel-caption">
-                        <div class="carousel-caption-inner">
-                            <p class="carousel-caption-title"><a href="#">How to Take Care for Hair in the Summer</a></p>
-                            <p class="carousel-caption-category"><a href="#" rel="category tag">Business</a>,
-                                <a href="#" rel="category tag">Lifestyle</a>, <a href="#" rel="category tag">Pursuits</a>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
+
     </header>
+    <script>
+        $(document).ready(function(){
+            var url = window.location.href;
+            console.log(url);
+            $("#cssmenu>ul>li").removeClass('active');
+            $("#cssmenu>ul>li").each(function(){
+                if($(this).children('a').attr('href') == url){
+                    $(this).addClass('active');
+                }
+            });
+        })
+    </script>
 @endsection

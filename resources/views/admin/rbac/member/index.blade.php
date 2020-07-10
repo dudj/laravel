@@ -8,11 +8,11 @@
         <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right" onclick="location.reload()" title="刷新">
             <i class="layui-icon layui-icon-refresh" style="line-height:30px"></i></a>
     </div>
-    <div class="layui-fluid">
+    <div class="layui-row">
         <div class="layui-row layui-col-space15">
             <div class="layui-col-md12">
                 <div class="layui-card">
-                    <div class="layui-card-body ">
+                    <div class="layui-card-header ">
                         <div class="layui-inline layui-show-xs-block">
                             <input class="layui-input" value="{{request('mailbox')}}"  autocomplete="off" placeholder="邮箱" name="mailbox">
                         </div>
@@ -75,7 +75,7 @@
                         }
                         layer.confirm('确认要删除吗？'+dataall,function(index){
                             //捉到所有被选中的，发异步进行删除
-                            var resStatus = commonAjax('{{url('admin/member/del')}}','post',Base64.encode('id='+dataall+'&type=more'),'json');
+                            var resStatus = commonAjax('{{url('admin/member/del')}}','post',Base64.encode('id='+dataall+'&type=more'),'json',false);
                             if(resStatus > 0){
                                 layer.msg('删除成功', {icon: 1});
                                 $(".layui-form-checked").not('.header').parents('tr').remove();
@@ -89,7 +89,7 @@
                 var data = obj.data;
                 if (obj.event === 'del') {
                     layer.confirm('确认删除吗？', function (index) {
-                        var resStatus = commonAjax('{{url('admin/member/del')}}','post',Base64.encode('id='+data.id+'&type=one'),'json');
+                        var resStatus = commonAjax('{{url('admin/member/del')}}','post',Base64.encode('id='+data.id+'&type=one'),'json',false);
                         if(resStatus > 0){
                             obj.del();
                             layer.close(index);

@@ -8,7 +8,7 @@
         <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right" onclick="location.reload()" title="刷新">
             <i class="layui-icon layui-icon-refresh" style="line-height:30px"></i></a>
     </div>
-    <div class="layui-fluid">
+    <div class="layui-row">
         <div class="layui-row layui-col-space15">
             <div class="layui-col-md12">
                 <div class="layui-card">
@@ -130,7 +130,7 @@
                 if($(obj).attr('title')=='停用'){
                     status = 0;
                 }
-                var resStatus = commonAjax('{{url('admin/group/change_status')}}','post',Base64.encode('id='+id+"&status="+status),'json');
+                var resStatus = commonAjax('{{url('admin/group/change_status')}}','post',Base64.encode('id='+id+"&status="+status),'json',false);
                 if(resStatus > 0){
                     if($(obj).attr('title')=='停用'){
                         //发异步把用户状态进行更改
@@ -151,7 +151,7 @@
         function group_del(obj,id){
             layer.confirm('确认要删除吗？',function(index){
                 //发异步删除数据
-                var resStatus = commonAjax('{{url('admin/group/del')}}','post',Base64.encode('id='+id),'json');
+                var resStatus = commonAjax('{{url('admin/group/del')}}','post',Base64.encode('id='+id),'json',false);
                 if(resStatus > 0){
                     $(obj).parents("tr").remove();
                     layer.msg('已删除!',{icon:1,time:1000});
@@ -170,7 +170,7 @@
             }
             layer.confirm('确认要删除吗？'+chk_value,function(index){
                 //捉到所有被选中的，发异步进行删除
-                var resStatus = commonAjax('{{url('admin/group/del')}}','post',Base64.encode('id='+chk_value+'&type=more'),'json');
+                var resStatus = commonAjax('{{url('admin/group/del')}}','post',Base64.encode('id='+chk_value+'&type=more'),'json',false);
                 if(resStatus > 0){
                     layer.msg('删除成功', {icon: 1});
                     $(".layui-form-checked").not('.header').parents('tr').remove();

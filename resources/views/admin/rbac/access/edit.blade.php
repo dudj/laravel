@@ -137,7 +137,7 @@
         });
         //监听提交
         form.on('submit(update)', function(data){
-            var resStatus = commonAjax('{{url('admin/access/update')}}','post',Base64.encode(JSON.stringify(data.field)),'json');
+            var resStatus = commonAjax('{{url('admin/access/update')}}','post',Base64.encode(JSON.stringify(data.field)),'json',false);
             //发异步，把数据提交给php
             if(resStatus > 0){
                 layer.alert("修改成功", {icon: 6},function () {

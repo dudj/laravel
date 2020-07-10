@@ -321,3 +321,4 @@
         </div>
     </section>
 @endsection
+@extends('layouts.home_footer')

@@ -121,7 +121,7 @@
         });
         //监听提交
         form.on('submit(add)', function(data){
-            var resStatus = commonAjax('{{url('admin/member/store')}}','post',Base64.encode(JSON.stringify(data.field)),'json');
+            var resStatus = commonAjax('{{url('admin/member/store')}}','post',Base64.encode(JSON.stringify(data.field)),'json',false);
             //发异步，把数据提交给php
             if(resStatus > 0){
                 layer.alert("增加成功", {icon: 6},function () {

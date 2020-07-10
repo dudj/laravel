@@ -108,7 +108,7 @@
                 layer.msg('两次密码不一至！请重新输入', '{icon:5}');
                 return false;
             }
-            var resStatus = commonAjax('{{url('admin/common/update_pwd')}}','post',Base64.encode(JSON.stringify('password='+newpass)),'json');
+            var resStatus = commonAjax('{{url('admin/common/updatePwd')}}','post',Base64.encode(JSON.stringify('password='+newpass)),'json',false);
             //发异步，把数据提交给php
             if(resStatus > 0){
                 layer.alert("修改成功", {icon: 6},function () {

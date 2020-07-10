@@ -35,7 +35,7 @@
                 <div class="layui-form-item">
                     <label class="layui-form-label"><span class="x-red">*</span>父节点</label>
                     <div class="layui-input-inline">
-                        <input type="text" name="parent_name" autocomplete="off" class="layui-input">
+                        <input type="text" name="parent_name" autocomplete="off" class="layui-input" placeholder="不选择默认为顶级节点">
                         <input type="hidden" name="parent_id" autocomplete="off" class="layui-input">
                         <div class="eleTree ele5" lay-filter="data5"></div>
                     </div>
@@ -131,7 +131,7 @@
         });
         //监听提交
         form.on('submit(add)', function(data){
-            var resStatus = commonAjax('{{url('admin/access/store')}}','post',Base64.encode(JSON.stringify(data.field)),'json');
+            var resStatus = commonAjax('{{url('admin/access/store')}}','post',Base64.encode(JSON.stringify(data.field)),'json',false);
             //发异步，把数据提交给php
             if(resStatus > 0){
                 layer.alert("增加成功", {icon: 6},function () {
