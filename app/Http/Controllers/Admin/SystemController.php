@@ -39,7 +39,7 @@ class SystemController extends Controller
             'treeData' => json_encode($menus)
         ]);
     }
-    public function member(Request $request){
+    public function user(Request $request){
         $where = function($query) use($request){
             if ($request->has('name') and $request->name != '') {
                 $search = "%" . $request->name . "%";
@@ -70,7 +70,7 @@ class SystemController extends Controller
             'start' => $request->start,
             'end' => $request->end
         ]);
-        return view('admin.rbac.member.index',['data'=>$data]);
+        return view('admin.rbac.user.index',['data'=>$data]);
     }
 
     /**

@@ -24,15 +24,15 @@ Route::group(['prefix' => 'admin'], function () {
         Route::post('/access/update', 'AccessController@update');
         Route::post('/access/del', 'AccessController@del');
         //权限结束
-        //会员开始
-        Route::get('/system/member', 'SystemController@member');
-        Route::get('/member/add', 'MemberController@add');
-        Route::post('/member/store', 'MemberController@store');
-        Route::post('/member/change_status', 'MemberController@change_status');//改变状态
-        Route::post('/member/del', 'MemberController@del');//删除
-        Route::get('/member/edit', 'MemberController@edit');//编辑
-        Route::get('/member/index_json', 'MemberController@indexJson');
-        Route::post('/member/update', 'MemberController@update');//编辑
+        //管理员开始
+        Route::get('/system/user', 'SystemController@user');
+        Route::get('/user/add', 'UserController@add');
+        Route::post('/user/store', 'UserController@store');
+        Route::post('/user/change_status', 'UserController@change_status');//改变状态
+        Route::post('/user/del', 'UserController@del');//删除
+        Route::get('/user/edit', 'UserController@edit');//编辑
+        Route::get('/user/index_json', 'UserController@indexJson');
+        Route::post('/user/update', 'UserController@update');//编辑
         //欢迎页
         Route::get('welcome', 'IndexController@welcome');
         //商品
@@ -67,6 +67,15 @@ Route::group(['prefix' => 'admin'], function () {
         Route::any('/ueditor/videoUp', 'UeditorController@videoUp');
         //监听
         Route::any('/system/loginTask', 'SystemController@loginTask');
+        //会员
+        Route::get('/member/list', 'MemberController@indexList');//列表
+        Route::any('/member/ajaxList', 'MemberController@ajaxList');//ajax返回列表数据
+        Route::any('/member/addMember', 'MemberController@addMember');//添加
+        Route::post('/member/editMember', 'MemberController@editMember');//修改
+        Route::get('/member/detail', 'MemberController@detail');//详情，可编辑页面
+        Route::any('/member/accountLog', 'MemberController@accountLog');//会员资金详情
+        Route::any('/member/editAccount', 'MemberController@editAccount');//会员资金编辑添加
+        Route::any('/member/address', 'MemberController@address');//会员收货地址
     });
     //登录路由相关
     Route::get('login', 'LoginController@showLoginForm')->name('admin.login');

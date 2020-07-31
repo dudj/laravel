@@ -36,7 +36,6 @@ class Access extends Model
                 'eng_name' => 'required',
                 'controller' => 'required',
                 'method' => 'required',
-                'parent_id' => 'required',
                 'order_by' => 'required',
                 'type' => 'required',
                 'icon' => 'required'
@@ -47,7 +46,6 @@ class Access extends Model
                 'eng_name' => 'required',
                 'controller' => 'required',
                 'method' => 'required',
-                'parent_id' => 'required',
                 'order_by' => 'required',
                 'type' => 'required',
                 'icon' => 'required'

@@ -36,7 +36,7 @@
                     <label class="layui-form-label"><span class="x-red">*</span>父节点</label>
                     <div class="layui-input-inline">
                         <input type="text" name="parent_name" autocomplete="off" class="layui-input" placeholder="不选择默认为顶级节点">
-                        <input type="hidden" name="parent_id" autocomplete="off" class="layui-input">
+                        <input type="hidden" name="parent_id" value="0" autocomplete="off" class="layui-input">
                         <div class="eleTree ele5" lay-filter="data5"></div>
                     </div>
                     <label for="order_by" class="layui-form-label">

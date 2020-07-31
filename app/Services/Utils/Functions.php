@@ -206,4 +206,43 @@ function getGoodsSn(){
     }
     return $goods_sn_pre.time().rand(1,999);
 }
+
+/**
+ * @param int $memberId 用户id
+ * @param int $memberMoney 可用余额变动
+ * @param int $payPoints 消费积分变动
+ * @param string $desc 描述
+ * @param int $orderId 订单id
+ * @param string $orderSn 订单号
+ * @param bool $recharge false不操作$user_total_money ,true则$user_total_money记录充值累计金额
+ * @param int $withdrawn 用户提现金额 0不操作$withdrawal_total_money ,大于0则$withdrawal_total_money记录提现累计金额
+ * @return bool
+ * 记录积分
+ */
+function accountLog($memberId, $memberMoney = 0,$payPoints = 0, $desc = '',$orderId = 0 ,$orderSn = '',$recharge = false,$withdrawn = 0){
+    $account_log = array(
+        'member_id'       => $memberId,
+        'member_money'    => $memberMoney,
+        'pay_points'    => $payPoints,
+        'change_time'   => time(),
+        'desc'   => $desc,
+        'order_id' => $orderId,
+        'order_sn' => $orderSn
+    );
+    $member = DB::table('member')->where('id', '=', $memberId)->first();
+    $updateData = [
+        'member_money'        => $member['member_money'] + $memberMoney,
+        'pay_points'        => $member['pay_points'] + $payPoints
+    ];
+    if($recharge) $updateData['member_total_money'] = $member['member_total_money'] + $memberMoney;  //用户充值累计金额
+    if($withdrawn) $updateData['withdrawal_total_money'] = $member['withdrawal_total_money'] + $withdrawn;  //用户提现累计金额
+    if(($memberMoney+$payPoints) == 0)return false;
+    $update = DB::table('member')->where('id', '=', $memberId)->update($updateData);
+    if($update){
+        DB::table('account_log')->insert($account_log);
+        return true;
+    }else{
+        return false;
+    }
+}
 ?>

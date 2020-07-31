@@ -27,7 +27,7 @@
                         </div>
                     </div>
                     <div class="layui-card-body ">
-                        <table class="layui-table" lay-data="{url:'{{url('admin/member/index_json')}}',page:true,toolbar: '#memberHeader',id:'memberData'}" lay-filter="member">
+                        <table class="layui-table" lay-data="{url:'{{url('admin/user/index_json')}}',page:true,toolbar: '#userHeader',id:'userData'}" lay-filter="user">
                             <thead>
                             <tr>
                                 <th lay-data="{type:'checkbox'}">ID</th>
@@ -37,7 +37,7 @@
                                 <th lay-data="{field:'mobile',templet: '#switchTpl'}">手机</th>
                                 <th lay-data="{field:'address'}">地址</th>
                                 <th lay-data="{field:'group_name', sort: true }">角色名</th>
-                                <th lay-data="{field:'right', title: '操作', width:70,toolbar:'#memberRight'}">操作</th>
+                                <th lay-data="{field:'right', title: '操作', width:70,toolbar:'#userRight'}">操作</th>
                             </thead>
                         </table>
                     </div>
@@ -45,13 +45,13 @@
             </div>
         </div>
     </div>
-    <script type="text/html" id="memberHeader">
+    <script type="text/html" id="userHeader">
         <div class = "layui-btn-container" >
             <button class="layui-btn layui-btn-sm layui-btn-danger" lay-event = "delAll"><i class="layui-icon"></i>批量删除</button>
-            <button class="layui-btn layui-btn-sm" onclick="xadmin.open('添加会员','{{url('admin/member/add')}}')"><i class="layui-icon"></i>添加</button>
+            <button class="layui-btn layui-btn-sm" onclick="xadmin.open('添加会员','{{url('admin/user/add')}}')"><i class="layui-icon"></i>添加</button>
         </div >
     </script>
-    <script type="text/html" id="memberRight">
+    <script type="text/html" id="userRight">
         <a class="" href="javascript:;" lay-event="edit"><i class="layui-icon">&#xe642;</i></a>
         <a class="" href="javascript:;" lay-event="del"><i class="layui-icon">&#xe640;</i></a>
     </script>
@@ -59,7 +59,7 @@
         layui.use('table',function() {
             var table = layui.table;
             //头工具栏事件
-            table.on('toolbar(member)', function (obj) {
+            table.on('toolbar(user)', function (obj) {
                 switch (obj.event) {
                     case 'delAll':
                         var checkStatus = table.checkStatus(obj.config.id);
@@ -75,7 +75,7 @@
                         }
                         layer.confirm('确认要删除吗？'+dataall,function(index){
                             //捉到所有被选中的，发异步进行删除
-                            var resStatus = commonAjax('{{url('admin/member/del')}}','post',Base64.encode('id='+dataall+'&type=more'),'json',false);
+                            var resStatus = commonAjax('{{url('admin/user/del')}}','post',Base64.encode('id='+dataall+'&type=more'),'json',false);
                             if(resStatus > 0){
                                 layer.msg('删除成功', {icon: 1});
                                 $(".layui-form-checked").not('.header').parents('tr').remove();
@@ -85,11 +85,11 @@
                 }
             });
             //监听工具条
-            table.on('tool(member)', function (obj) {
+            table.on('tool(user)', function (obj) {
                 var data = obj.data;
                 if (obj.event === 'del') {
                     layer.confirm('确认删除吗？', function (index) {
-                        var resStatus = commonAjax('{{url('admin/member/del')}}','post',Base64.encode('id='+data.id+'&type=one'),'json',false);
+                        var resStatus = commonAjax('{{url('admin/user/del')}}','post',Base64.encode('id='+data.id+'&type=one'),'json',false);
                         if(resStatus > 0){
                             obj.del();
                             layer.close(index);
@@ -105,7 +105,7 @@
                         shadeClose: true,
                         skin: 'layui-layer-rim', //加上边框
                         area: ['80%', '80%'], //宽高
-                        content: '{{url('admin/member/edit?id=')}}'+data.id
+                        content: '{{url('user')}}'+data.id
                     });
                 }
             });
@@ -118,8 +118,8 @@
                 getInfo: function () {
                     var index = layer.msg('查询中，请稍候...',{icon: 16,time:false,shade:0});
                     setTimeout(function(){
-                        table.reload('memberData', {
-                            url:'{{url('admin/member/index_json')}}',
+                        table.reload('userData', {
+                            url:'{{url('admin/user/index_json')}}',
                             where: {
                                 'name' : $('input[name="name"]').val(),
                                 'mobile' : $('input[name="mobile"]').val(),
