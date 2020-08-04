@@ -76,6 +76,16 @@ Route::group(['prefix' => 'admin'], function () {
         Route::any('/member/accountLog', 'MemberController@accountLog');//会员资金详情
         Route::any('/member/editAccount', 'MemberController@editAccount');//会员资金编辑添加
         Route::any('/member/address', 'MemberController@address');//会员收货地址
+        Route::get('/member/levelList', 'MemberController@levelList');//会员等级列表
+        Route::any('/member/addEditMemberLevel', 'MemberController@addEditMemberLevel');//添加修改会员等级
+        Route::any('/member/deleteMemberLevel', 'MemberController@deleteMemberLevel');//删除会员等级
+        Route::any('/member/signList', 'MemberController@signList');//会员签到列表
+        Route::any('/member/rechargeList', 'MemberController@rechargeList');//充值记录列表
+        Route::any('/member/withdrawalsList', 'MemberController@withdrawalsList');//提现记录列表
+        Route::post('/member/withdrawalsEdit', 'MemberController@withdrawalsEdit');//提现记录修改审核状态
+        //插件
+        Route::any('/plugins/payment', 'PluginsController@payment');//支付插件列表
+        Route::any('/plugins/login', 'PluginsController@login');//快捷登录插件列表
     });
     //登录路由相关
     Route::get('login', 'LoginController@showLoginForm')->name('admin.login');

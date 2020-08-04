@@ -3,18 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Logic\Admin\GoodsLogic;
 use App\Logic\Admin\MemberLogic;
-use App\Models\Admin\Brand;
-use App\Models\Admin\GoodsCategory;
-use App\Models\Common\Goods;
-use App\Models\Admin\Goods as adminGoods;
-use App\Models\Common\Member;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Validator;
-use League\Flysystem\Exception;
 
 
 /**
@@ -153,7 +144,7 @@ class MemberController extends Controller
                 $res = $memberObj->editAccount($request);
                 return response()->json($res);
             }catch (\Exception $e){
-                return response()->json(['code'=>-1,'msg'=>$e->getMessage()]);
+                return $this->error([],$e->getMessage());
             }
         }
         $member = DB::table('member')->select("*")->where('id',$request->member_id)->first();
@@ -181,5 +172,194 @@ class MemberController extends Controller
         return view('admin.member.address',[
             'member_id' => $request->member_id
         ]);
+    }
+    //会员等级
+    public function levelList(Request $request){
+        if($request->ajax() && $request->isMethod('get')){
+            if(!isset($request->sortfield)){
+                $request->sortfield = 'id';
+            }
+            if(!isset($request->sorttype)){
+                $request->sorttype = 'desc';
+            }
+            $list = DB::table('member_level')->select('*')->orderBy($request->sortfield, $request->sorttype)->paginate(20)->toArray();
+            $data = [
+                'code' => 0,
+                'data' => $list['data'],
+                'count' => $list['total'],
+                'msg' => '查询成功'
+            ];
+            return response()->json($data);
+        }
+        return view('admin.member.levellist');
+    }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\JsonResponse|\Illuminate\View\View
+     * 添加编辑会员等级
+     */
+    public function addEditMemberLevel(Request $request){
+        try{
+            if($request->ajax() && $request->isMethod('post')){
+                try{
+                    $memberObj = new MemberLogic();
+                    $res = $memberObj->addEditMemberLevel($request);
+                    return response()->json($res);
+                }catch (\Exception $e){
+                    return $this->error([],$e->getMessage());
+                }
+            }
+            $member = DB::table('member_level')->select("*")->where('id',$request->id)->first();
+            return view('admin.member._member_level',[
+                'data'=>$member
+            ]);
+        }catch (\Exception $e){
+            return $this->error([],$e->getMessage());
+        }
+    }
+
+    /**
+     * @param Request $request
+     * @return mixed
+     * 删除会员等级数据
+     */
+    public function deleteMemberLevel(Request $request){
+        try{
+            $id = $request->get('ids');
+            $res = self::commonDel('member_level',[['key'=>'id','relation'=>'=','val'=>$id]]);
+            if($res){
+                return $this->success([],'删除成功');
+            }
+        }catch (\Exception $e){
+            return $this->error([],$e->getMessage());
+        }
+    }
+    //签到
+    /**
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\JsonResponse|\Illuminate\View\View|mixed
+     * 签到列表
+     */
+    public function signList(Request $request){
+        try{
+            if($request->ajax() && $request->isMethod('post')){
+                if(!isset($request->sortfield)){
+                    $request->sortfield = 'id';
+                }
+                if(!isset($request->sorttype)){
+                    $request->sorttype = 'desc';
+                }
+                $param = [
+                    'paramDate' => ['signtime'],
+                    'paramIn' => [],
+                    'paramWhere' => [],
+                    'paramLike' => [],
+                ];
+                $where = $this->whereConcat($request, $param);
+                $list = DB::table('sign as s')->leftjoin('member as m',function($join){
+                    $join->on('m.id','=','s.member_id');
+                })->select('s.*','m.username')->where($where)->orderBy($request->sortfield, $request->sorttype)->paginate(20)->toArray();
+                $data = [
+                    'code' => 0,
+                    'data' => $list['data'],
+                    'count' => $list['total'],
+                    'msg' => '查询成功'
+                ];
+                return response()->json($data);
+            }
+            return view('admin.member.signList');
+        }catch (\Exception $e){
+            return $this->error([],$e->getMessage());
+        }
+    }
+    //充值提现
+    public function rechargeList(Request $request){
+        try{
+            if($request->ajax() && $request->isMethod('post')){
+                if(!isset($request->sortfield)){
+                    $request->sortfield = 'id';
+                }
+                if(!isset($request->sorttype)){
+                    $request->sorttype = 'desc';
+                }
+                $param = [
+                    'paramDate' => ['createtime'],
+                    'paramIn' => [],
+                    'paramWhere' => [],
+                    'paramLike' => ['nickname'],
+                ];
+                $where = $this->whereConcat($request, $param);
+                $list = DB::table('recharge')->select('*')->where($where)->orderBy($request->sortfield, $request->sorttype)->paginate(20)->toArray();
+                $data = [
+                    'code' => 0,
+                    'data' => $list['data'],
+                    'count' => $list['total'],
+                    'msg' => '查询成功'
+                ];
+                return response()->json($data);
+            }
+            return view('admin.member.rechargeList');
+        }catch (\Exception $e){
+            return $this->error([],$e->getMessage());
+        }
+    }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\JsonResponse|\Illuminate\View\View|mixed
+     * 提现列表
+     */
+    public function withdrawalsList(Request $request){
+        try{
+            if($request->ajax() && $request->isMethod('post')){
+                if(!isset($request->sortfield)){
+                    $request->sortfield = 'id';
+                }
+                if(!isset($request->sorttype)){
+                    $request->sorttype = 'desc';
+                }
+                $param = [
+                    'paramDate' => ['applytime'],
+                    'paramIn' => [],
+                    'paramWhere' => ['status'],
+                    'paramLike' => ['username','realname','bankcard'],
+                ];
+                $where = $this->whereConcat($request, $param);
+                $list = DB::table('withdrawals as w')->leftjoin('member as m',function($join){
+                    $join->on('w.member_id','=','m.id');
+                })->select('w.*','m.username')
+                    ->where($where)
+                    ->whereNotIn('status',[-1,-2])->orderBy($request->sortfield, $request->sorttype)->paginate(20)->toArray();
+                $data = [
+                    'code' => 0,
+                    'data' => $list['data'],
+                    'count' => $list['total'],
+                    'msg' => '查询成功'
+                ];
+                return response()->json($data);
+            }
+            return view('admin.member.withdrawalsList');
+        }catch (\Exception $e){
+            return $this->error([],$e->getMessage());
+        }
+    }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse|mixed
+     * 修改提现记录的审核状态
+     */
+    public function withdrawalsEdit(Request $request){
+        try{
+            $memberObj = new MemberLogic();
+            $res = $memberObj->withdrawalsEdit($request);
+            if($res == 1){
+                return $this->success([],'审核完成');
+            }
+            return $this->error([],'审核失败');
+        }catch (\Exception $e){
+            return $this->error([],$e->getMessage());
+        }
     }
 }

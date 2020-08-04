@@ -13,6 +13,7 @@ namespace App\Logic\Admin;
 
 use App\Models\Common\AccountLog;
 use App\Models\Common\Member;
+use App\Models\Common\MemberLevel;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Predis\Client;
@@ -93,5 +94,32 @@ class MemberLogic extends Model
             'count' => 0,
             'msg' => '查询成功'
         ];
+    }
+
+    /**
+     * @param $request
+     * @return array
+     * 添加和编辑会员等级
+     */
+    public function addEditMemberLevel($request){
+        $model = new MemberLevel();
+        $res = $model->checkForm($request);
+        return $res;
+    }
+
+    /**
+     * @param $request
+     * @return mixed
+     * 修改审核状态
+     */
+    public function withdrawalsEdit($request){
+        $model = DB::table('withdrawals');
+        if(isset($request->id) && $request->id){
+            $model->whereIn('id',explode(',',$request->id));
+        }
+        $data['status'] = $request->status;
+        $data['audittime'] = time();
+        $data['remark'] = $request->remark;
+        return $model->update($data);
     }
 }
