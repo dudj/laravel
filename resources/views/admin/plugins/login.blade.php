@@ -34,7 +34,7 @@
         var tableList = table.render({
             elem: '#list',
             id: 'list',
-            url:'{{url('admin/plugins/payment')}}',
+            url:'{{url('admin/plugins/login')}}',
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
@@ -63,15 +63,29 @@
         //监听行工具事件(操作)导航
         table.on('tool(list)', function(obj){
             var data = obj.data;
+            var status = data.status;
+            if(status == 1){
+                status = 0;
+            }else{
+                status = 1;
+            }
             switch(obj.event){
-                case 'detail':
-                    location.href='{{url('admin/member/detail?id=')}}'+data.id;
+                case 'open':
+                    var resStatus = commonAjax('{{url('admin/plugins/switchStatus')}}','post',Base64.encode('code='+data.code+'&status='+status),'json',false);
+                    if(resStatus > 0){
+                        layer.msg('启用成功', {icon: 1});
+                        table.reload('list');
+                    }
                     break;
-                case 'money':
-                    location.href='{{url('admin/member/accountLog?member_id=')}}'+data.id;
+                case 'edit':
+                    xadmin.open('配置登录参数','{{url('admin/plugins/setting?code=')}}'+data.code+'&type='+data.type);
                     break;
-                case 'address':
-                    location.href='{{url('admin/member/address?member_id=')}}'+data.id;
+                case 'close':
+                    var resStatus = commonAjax('{{url('admin/plugins/switchStatus')}}','post',Base64.encode('code='+data.code+'&status='+status),'json',false);
+                    if(resStatus > 0){
+                        layer.msg('停用成功', {icon: 1});
+                        table.reload('list');
+                    }
                     break;
             }
         });

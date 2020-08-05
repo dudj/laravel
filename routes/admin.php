@@ -86,6 +86,8 @@ Route::group(['prefix' => 'admin'], function () {
         //插件
         Route::any('/plugins/payment', 'PluginsController@payment');//支付插件列表
         Route::any('/plugins/login', 'PluginsController@login');//快捷登录插件列表
+        Route::post('/plugins/switchStatus', 'PluginsController@switchStatus');//改变插件的状态
+        Route::any('/plugins/setting', 'PluginsController@setting');//设置
     });
     //登录路由相关
     Route::get('login', 'LoginController@showLoginForm')->name('admin.login');
