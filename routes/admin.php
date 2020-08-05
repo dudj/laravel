@@ -88,6 +88,9 @@ Route::group(['prefix' => 'admin'], function () {
         Route::any('/plugins/login', 'PluginsController@login');//快捷登录插件列表
         Route::post('/plugins/switchStatus', 'PluginsController@switchStatus');//改变插件的状态
         Route::any('/plugins/setting', 'PluginsController@setting');//设置
+        //系统设置-积分兑换
+        Route::any('/integral/index', 'IntegralController@index');//index和其它不同
+        Route::post('/integral/clear', 'IntegralController@clear');//清除所有会员积分
     });
     //登录路由相关
     Route::get('login', 'LoginController@showLoginForm')->name('admin.login');
