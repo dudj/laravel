@@ -362,4 +362,23 @@ class MemberController extends Controller
             return $this->error([],$e->getMessage());
         }
     }
+
+    public function signRules(Request $request){
+        try{
+            if($request->ajax() && $request->isMethod('post')){
+                $data = [];
+                foreach($request->all() as $k=>$v){
+                    $data[$k] = $v;
+                }
+                LaravelRedisCache('signRules.all',$data);
+                return $this->success([],'成功');
+            }
+            $data = LaravelRedisCache('signRules.',[]);
+            return view('admin.member.sign_rules',[
+                'data' => $data
+            ]);
+        }catch (\Exception $e){
+            return $this->error([],$e->getMessage());
+        }
+    }
 }

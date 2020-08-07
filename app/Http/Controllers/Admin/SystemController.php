@@ -108,4 +108,27 @@ class SystemController extends Controller
         $time = time() - 3600; // 删除购物车数据  1小时以前的
         DB::table("cart")->where('user_id', '=', 0)->where('add_time','<',$time)->delete();
     }
+    /**
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View|mixed
+     * 提现设置
+     */
+    public function cash(Request $request){
+        try{
+            if($request->ajax() && $request->isMethod('post')){
+                $data = [];
+                foreach($request->all() as $k=>$v){
+                    $data[$k] = $v;
+                }
+                LaravelRedisCache('cash.all',$data);
+                return $this->success([],'成功');
+            }
+            $data = LaravelRedisCache('cash.',[]);
+            return view('admin.system.cash',[
+                'data' => $data
+            ]);
+        }catch (\Exception $e){
+            return $this->error([],$e->getMessage());
+        }
+    }
 }

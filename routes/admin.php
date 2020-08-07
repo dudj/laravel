@@ -16,6 +16,9 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('/group/edit', 'GroupController@edit');//编辑角色
         Route::post('/group/update', 'GroupController@update');//编辑角色
         //分组路由结束
+        //设置
+        Route::any('/system/cash', 'SystemController@cash');//提现设置
+        Route::any('/member/signRules', 'MemberController@signRules');//积分规则设定
         //权限开始
         Route::get('/system/access', 'SystemController@access');
         Route::get('/access/add', 'AccessController@add');

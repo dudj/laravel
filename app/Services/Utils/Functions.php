@@ -245,4 +245,60 @@ function accountLog($memberId, $memberMoney = 0,$payPoints = 0, $desc = '',$orde
         return false;
     }
 }
+/**
+ * @param $key intergal.is_reg => 查询
+ * @param $data
+ * @return array
+ * @throws Exception
+ * 缓存一些数据
+ */
+function LaravelRedisCache($key,$data){
+    try{
+        $redis = new \Predis\Client();
+        $param = explode('.',$key);
+        if(empty($data)){
+            $res = $redis->get($param[0]);
+            if(!$res){
+                $cacheData = DB::table('config')->where('inc_type',$param[0])->get()->toArray();
+                $arr = [];
+                foreach($cacheData as $val){
+                    $arr[$val['name']] = $val['value'];
+                }
+                $redis->set($param[0],serialize($arr));
+                return $arr;
+            }else{
+                return unserialize($res);
+            }
+        }else{
+            $result =  DB::table('config')->where("inc_type", $param[0])->get()->toArray();
+            //有数据 更新 或者 插入
+            if($result){
+                foreach($data as $k=>$v){
+                    $flag = true;
+                    foreach($result as $key=>$val){
+                        if($val['name'] == $k){
+                            $flag = false;
+                            DB::table('config')->where('name',$k)->where('inc_type',$param[0])->update(['value'=>$v]);
+                            break;
+                        }
+                    }
+                    if($flag){
+                        DB::table('config')->insert(['inc_type'=>$param[0],'name'=>$k,'value'=>$v]);
+                    }
+                }
+            }else{
+                //没有数据插入
+                $newArr = [];
+                foreach($data as $k=>$v){
+                    $newArr[] = array('name'=>$k,'value'=>trim($v),'inc_type'=>$param[0]);
+                }
+                DB::table('config')->insert($newArr);
+            }
+            $redis->set($param[0],serialize($data));
+            return $data;
+        }
+    }catch (Exception $e){
+        throw new Exception($e->getMessage());
+    }
+}
 ?>
