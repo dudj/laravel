@@ -11,7 +11,7 @@
 |
 */
 
-//前台路由
+//前台路由-测试
 Route::get('/', 'Home\IndexController@index');
 Route::get('/index/index', 'Home\IndexController@index');
 Route::get('/common/contact', 'Home\CommonController@contact');
