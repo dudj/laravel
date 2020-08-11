@@ -13,6 +13,7 @@
 
 //前台路由
 Route::get('/', 'Home\IndexController@index');
+Route::get('/index/index', 'Home\IndexController@index');
 Route::get('/common/contact', 'Home\CommonController@contact');
 
 

@@ -46,9 +46,11 @@ class MemberController extends Controller
             'paramIn' => [],
         ];
         $where = $this->whereConcat($request, $param);
+        $pagesize = $request->limit;
+        $offset = ($request->page - 1) * $pagesize;
         $list = DB::table('member as m')->leftjoin('member_level as l',function($join){
             $join->on('m.level','=','l.id');
-        })->select('m.id','m.username','m.email','m.member_money','m.frozen_money','m.register_time','m.mobile','m.mobile_validated','m.email_validated','m.level','m.is_lock','l.level_name')->where($where)->orderBy($request->sortfield, $request->sorttype)->paginate(20)->toArray();
+        })->select('m.id','m.username','m.email','m.member_money','m.frozen_money','m.register_time','m.mobile','m.mobile_validated','m.email_validated','m.level','m.is_lock','l.level_name')->where($where)->orderBy($request->sortfield, $request->sorttype)->offset($offset)->paginate($pagesize)->toArray();
         $data = [
             'code' => 0,
             'data' => $list['data'],
@@ -119,7 +121,9 @@ class MemberController extends Controller
             $request->sorttype = 'desc';
         }
         if($request->ajax() && $request->isMethod('post')){
-            $list = DB::table('account_log')->select('*')->where('member_id',$request->member_id)->orderBy($request->sortfield, $request->sorttype)->paginate(20)->toArray();
+            $pagesize = $request->limit;
+            $offset = ($request->page - 1) * $pagesize;
+            $list = DB::table('account_log')->select('*')->where('member_id',$request->member_id)->orderBy($request->sortfield, $request->sorttype)->offset($offset)->paginate($pagesize)->toArray();
             $data = [
                 'code' => 0,
                 'data' => $list['data'],
@@ -182,7 +186,9 @@ class MemberController extends Controller
             if(!isset($request->sorttype)){
                 $request->sorttype = 'desc';
             }
-            $list = DB::table('member_level')->select('*')->orderBy($request->sortfield, $request->sorttype)->paginate(20)->toArray();
+            $pagesize = $request->limit;
+            $offset = ($request->page - 1) * $pagesize;
+            $list = DB::table('member_level')->select('*')->orderBy($request->sortfield, $request->sorttype)->offset($offset)->paginate($pagesize)->toArray();
             $data = [
                 'code' => 0,
                 'data' => $list['data'],
@@ -257,9 +263,11 @@ class MemberController extends Controller
                     'paramLike' => [],
                 ];
                 $where = $this->whereConcat($request, $param);
+                $pagesize = $request->limit;
+                $offset = ($request->page - 1) * $pagesize;
                 $list = DB::table('sign as s')->leftjoin('member as m',function($join){
                     $join->on('m.id','=','s.member_id');
-                })->select('s.*','m.username')->where($where)->orderBy($request->sortfield, $request->sorttype)->paginate(20)->toArray();
+                })->select('s.*','m.username')->where($where)->orderBy($request->sortfield, $request->sorttype)->offset($offset)->paginate($pagesize)->toArray();
                 $data = [
                     'code' => 0,
                     'data' => $list['data'],
@@ -290,7 +298,9 @@ class MemberController extends Controller
                     'paramLike' => ['nickname'],
                 ];
                 $where = $this->whereConcat($request, $param);
-                $list = DB::table('recharge')->select('*')->where($where)->orderBy($request->sortfield, $request->sorttype)->paginate(20)->toArray();
+                $pagesize = $request->limit;
+                $offset = ($request->page - 1) * $pagesize;
+                $list = DB::table('recharge')->select('*')->where($where)->orderBy($request->sortfield, $request->sorttype)->offset($offset)->paginate($pagesize)->toArray();
                 $data = [
                     'code' => 0,
                     'data' => $list['data'],
@@ -326,11 +336,13 @@ class MemberController extends Controller
                     'paramLike' => ['username','realname','bankcard'],
                 ];
                 $where = $this->whereConcat($request, $param);
+                $pagesize = $request->limit;
+                $offset = ($request->page - 1) * $pagesize;
                 $list = DB::table('withdrawals as w')->leftjoin('member as m',function($join){
                     $join->on('w.member_id','=','m.id');
                 })->select('w.*','m.username')
                     ->where($where)
-                    ->whereNotIn('status',[-1,-2])->orderBy($request->sortfield, $request->sorttype)->paginate(20)->toArray();
+                    ->whereNotIn('status',[-1,-2])->orderBy($request->sortfield, $request->sorttype)->offset($offset)->paginate($pagesize)->toArray();
                 $data = [
                     'code' => 0,
                     'data' => $list['data'],

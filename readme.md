@@ -28,3 +28,5 @@
 
 6.layouts是公共页面
 
+7.dump(DB::getQueryLog());
+

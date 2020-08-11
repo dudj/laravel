@@ -94,6 +94,11 @@ Route::group(['prefix' => 'admin'], function () {
         //系统设置-积分兑换
         Route::any('/integral/index', 'IntegralController@index');//index和其它不同
         Route::post('/integral/clear', 'IntegralController@clear');//清除所有会员积分
+        //页面相关
+        Route::any('/system/navList', 'SystemController@navList');
+        Route::get('/system/deleteNav', 'SystemController@deleteNav');
+        Route::any('/system/addEditNav', 'SystemController@addEditNav');
+        Route::post('/system/handleNav', 'SystemController@handleNav');
     });
     //登录路由相关
     Route::get('login', 'LoginController@showLoginForm')->name('admin.login');

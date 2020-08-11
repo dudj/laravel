@@ -218,12 +218,14 @@ class GoodsLogic extends Model
             //查询审核通过的数据
             $query->where('audit', '=', 0);
         };
+        $pagesize = $request->limit;
+        $offset = ($request->page - 1) * $pagesize;
         $goodsList = DB::table('goods as g')
             ->leftjoin('goods_category as gc',function($join){
                 $join->on('g.cat_id','=','gc.id');
             })->leftjoin('suppliers as s',function($join){
                 $join->on('g.suppliers_id','=','s.suppliers_id');
-            })->select('g.*','gc.name as cat_name','s.suppliers_name')->where($where)->orderBy($request->sortfield, $request->sorttype)->paginate(20)->toArray();
+            })->select('g.*','gc.name as cat_name','s.suppliers_name')->where($where)->orderBy($request->sortfield, $request->sorttype)->offset($offset)->paginate($pagesize)->toArray();
         return $goodsList;
     }
 
@@ -234,7 +236,9 @@ class GoodsLogic extends Model
      */
     public function getBrandList($request){
         $keyword = '%'.trim($request->keyword).'%';
-        $goodsList = DB::table('brand')->where('name','LIKE',$keyword)->paginate(20)->toArray();
+        $pagesize = $request->limit;
+        $offset = ($request->page - 1) * $pagesize;
+        $goodsList = DB::table('brand')->where('name','LIKE',$keyword)->offset($offset)->paginate($pagesize)->toArray();
         return $goodsList;
     }
     /**

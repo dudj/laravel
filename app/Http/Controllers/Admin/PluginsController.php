@@ -23,7 +23,9 @@ class PluginsController extends Controller
      */
     public function payment(Request $request){
         if($request->ajax() && $request->isMethod('post')) {
-            $list = DB::table('plugins')->select("*")->where('type', 'payment')->paginate(20)->toArray();
+            $pagesize = $request->limit;
+            $offset = ($request->page - 1) * $pagesize;
+            $list = DB::table('plugins')->select("*")->where('type', 'payment')->offset($offset)->paginate($pagesize)->toArray();
             $data = [
                 'code' => 0,
                 'data' => $list['data'],
@@ -42,7 +44,9 @@ class PluginsController extends Controller
      */
     public function login(Request $request){
         if($request->ajax() && $request->isMethod('post')) {
-            $list = DB::table('plugins')->select("*")->where('type', 'login')->paginate(20)->toArray();
+            $pagesize = $request->limit;
+            $offset = ($request->page - 1) * $pagesize;
+            $list = DB::table('plugins')->select("*")->where('type', 'login')->offset($offset)->paginate($pagesize)->toArray();
             $data = [
                 'code' => 0,
                 'data' => $list['data'],
