@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
+use Predis\Client;
 
 /**
  * Class CommonController
@@ -35,7 +37,18 @@ class CommonController extends Controller
     public function errors(){
         return view('admin.common.errors');
     }
+
+    /**
+     * @return \Illuminate\Http\RedirectResponse
+     * 清除缓存
+     */
     public function clear(){
+        //清除redis缓存
+        $redis = new Client();
+        $keys = $redis->keys("*");
+        foreach ($keys as $key) {
+            $redis->del($key);
+        }
         Artisan::call('cache:clear');
         Artisan::call('config:clear');
         Artisan::call('route:clear');

@@ -25,6 +25,17 @@ class Controller extends BaseController
         self::getAllMenuSon($nodeData);
         return $nodeData;
     }
+
+    /**
+     * @param $parent_id
+     * @return mixed
+     * 获取某一个节点的所有子节点
+     */
+    public static function getOneMenu($parent_id){
+        $nodeData = DB::table('access')->where('parent_id','=',$parent_id)->orderBy('order_by')->get()->toArray();
+        self::getAllMenuSon($nodeData);
+        return $nodeData;
+    }
     public static function getAllMenuSon(&$nodeData){
         foreach ($nodeData as $key => $value) {
             $query = DB::table('access');
@@ -34,7 +45,6 @@ class Controller extends BaseController
         }
         return $nodeData;
     }
-
     /**
      * @param $data
      * @param $msg
@@ -139,4 +149,44 @@ class Controller extends BaseController
         }
         return $data;
     }*/
+    /**
+     * @param $request
+     * @param $param
+     * @return \Closure
+     * where查询条件拼接
+     */
+    public function whereConcat($request, $param){
+        $where = function($query) use($request,$param){
+            //=
+            foreach($param['paramWhere'] as $val){
+                if ($request->has($val) && $request->$val != '') {
+                    $query->where($val, '=', $request->$val);
+                }
+            }
+            //like
+            foreach($param['paramLike'] as $val){
+                if ($request->has($val) && $request->$val != '') {
+                    $search = "%" . trim($request->$val) . "%";
+                    $query->where($val, 'LIKE', $search);
+                }
+            }
+            //in
+            foreach($param['paramIn'] as $key=>$val){
+                if($request->has($key) && $request->$key > 0){
+                    $query->whereIn($key, $val($request->$key));
+                }
+            }
+            foreach($param['paramDate'] as $key=>$val){
+                $start = $val.'_start';
+                $end = $val.'_end';
+                if($request->has($start) && $request->has($end)){
+                    if($request->$start != '' && $request->$end != ''){
+                        $query->whereBetween($val,[strtotime($request->$start),strtotime($request->$end)]);
+                    }
+                }
+            }
+
+        };
+        return $where;
+    }
 }

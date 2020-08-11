@@ -104,9 +104,12 @@ return [
     | such as APC or Memcached. Laravel makes it easy to dig right in.
     |
     */
-
+    /**
+     * 配置redis 根据composer 进行 predis扩展的下载
+     * composer require predis/predis
+     */
     'redis' => [
-
+        'client' => 'predis',
         'cluster' => false,
 
         'default' => [
