@@ -5,8 +5,8 @@
 <!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
 <head>
     <meta charset="utf-8">
-    <title>{{ config('app.name', 'Laravel') }} - Home</title>
-    <meta name="description" content="Free Responsive Html5 Css3 Templates">
+    <title>{{ config('app.name', 'LD') }} - 商城</title>
+    <meta name="description" content="LD商城">
     <meta name="author" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link rel="stylesheet" href="{{ asset('home/css/zerogrid.css') }}">
@@ -19,6 +19,7 @@
     <link rel="stylesheet" href="{{ asset('home/owl-carousel/owl.carousel.css') }}" rel="stylesheet" type="text/css">
     <script src="{{ asset('home/js/jquery-2.1.1.js') }}"></script>
     <script src="{{ asset('home/js/script.js') }}"></script>
+    <script src="{{ asset('home/js/ldSlider.js') }}"></script>
 
     <!--[if lt IE 8]>
     <div style=' clear: both; text-align:center; position: relative;'>

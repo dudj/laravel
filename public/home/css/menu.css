@@ -1,6 +1,6 @@
 @import url(http://fonts.googleapis.com/css?family=PT+Sans:400,700);
 #cssmenu {
-  background: #222;
+  background: #F0F0F0;
   margin: 0;
   width: auto;
   padding: 0;
@@ -11,9 +11,9 @@
 }
 #cssmenu ul {
   list-style: none;
-  margin: 0;
   padding: 0;
   display: block;
+  margin-left:7%;
 }
 #cssmenu ul:after,
 #cssmenu:after {
@@ -158,7 +158,7 @@
   height: 0;
   top: 0;
   z-index: 0;
-  background: #C4A648;
+  background: #5CE1E6;
   -webkit-transition: height .2s;
   -moz-transition: height .2s;
   -ms-transition: height .2s;
@@ -192,9 +192,8 @@
   top: 21px;
 }
 #cssmenu > ul > li > a {
-  color: #fff;
+  color: inherit;
   padding: 15px 20px;
-  font-weight: 600;
   letter-spacing: 1px;
   text-transform: uppercase;
   font-size: 14px;
