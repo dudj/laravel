@@ -247,8 +247,8 @@ footer .col-footer-2 ul li a:hover{color: #C4A648;}
 
 footer .col-footer-3 input[type="text"]{ outline: medium none;color: #999999;display: block;font-size: 14px;height: 40px;line-height: 1.2;margin: 10px 0;padding: 5px 10px 0;width: 100%;background-color: transparent;border: 2px solid #999;}
 
-.copyright{background: #f1f1f1;color: #777;}
-.copyright .wrapper{padding: 20px;}
+.copyright{background: #f1f1f1;color: #777;padding:0 7%;}
+.copyright .wrapper{padding: 20px 0;}
 .copyright ul.quick-link{float: right;}
 .copyright ul.quick-link li {display: inline-block;margin-right: 10px;}
 .copyright a{}

@@ -4,8 +4,8 @@
             {{--nav--}}
             <div class="nav">
                 <span class="nologin">
-                    <a style="margin-right:5px;color:#5CE1E6;" href="/Home/user/login.html">登录</a>
-                    <a href="/Home/user/reg.html">注册</a>
+                    <a style="margin-right:5px;color:#5CE1E6;" href="{{url('login')}}">登录</a>
+                    <a href="{{url('register')}}">注册</a>
                 </span>
                 <ul>
                     <li><a href="{{url('/')}}"><span>我的订单</span></a></li>
