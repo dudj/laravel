@@ -11,4 +11,6 @@ return [
     'UPLOAD_PATH' => 'upload/',
     'oss_switch' => false,
     'erasable_type' =>['.gif','.jpg','.jpeg','.bmp','.png','.mp4','.3gp','.flv','.avi','.wmv'],
+    //自定义公共验证函数
+    'common_check_prefix' => ['captcha'],
 ];

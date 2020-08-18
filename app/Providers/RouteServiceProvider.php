@@ -39,9 +39,10 @@ class RouteServiceProvider extends ServiceProvider
 
         $this->mapAuthRoutes();
 
-        $this->mapWebRoutes();
+        $this->mapHomeRoutes();
 
         $this->mapAdminRoutes();
+
     }
 
     /**
@@ -51,13 +52,12 @@ class RouteServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    protected function mapWebRoutes()
+    protected function mapHomeRoutes()
     {
         Route::group([
-            'middleware' => 'web',
-            'namespace' => $this->namespace,
+            'namespace' => $this->namespace.'\Home',
         ], function ($router) {
-            require base_path('routes/web.php');
+            require base_path('routes/home.php');
         });
     }
 
