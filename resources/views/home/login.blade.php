@@ -48,15 +48,16 @@
     </fieldset>
     <div class="layui-row layui-col-space15">
         <form class="layui-form zyl_pad_01" method="post" action="{{ url('/login') }}">
+            {{ csrf_field() }}
             <div class="layui-col-sm12 layui-col-md12">
                 <div class="layui-form-item">
-                    <input type="text" name="username" lay-verify="required|username" autocomplete="off" placeholder="账号" class="layui-input">
+                    <input type="text" name="username" lay-verify="required" autocomplete="off" placeholder="账号" class="layui-input">
                     <i class="layui-icon layui-icon-username zyl_lofo_icon"></i>
                 </div>
             </div>
             <div class="layui-col-sm12 layui-col-md12">
                 <div class="layui-form-item">
-                    <input type="password" name="password" lay-verify="required|password" autocomplete="off" placeholder="密码" class="layui-input">
+                    <input type="password" name="password" lay-verify="required" autocomplete="off" placeholder="密码" class="layui-input">
                     <i class="layui-icon layui-icon-password zyl_lofo_icon"></i>
                 </div>
             </div>
@@ -64,7 +65,7 @@
                 <div class="layui-row">
                     <div class="layui-col-xs4 layui-col-sm4 layui-col-md4">
                         <div class="layui-form-item">
-                            <input type="text" name="captcha" id="captcha" lay-verify="required|captcha" autocomplete="off" placeholder="验证码" class="layui-input" maxlength="6">
+                            <input type="text" name="captcha" id="captcha" lay-verify="required" autocomplete="off" placeholder="验证码" class="layui-input" maxlength="6">
                             <i class="layui-icon layui-icon-vercode zyl_lofo_icon"></i>
                         </div>
                     </div>
@@ -74,7 +75,8 @@
                 </div>
             </div>
             <div class="layui-col-sm12 layui-col-md12">
-                <button class="layui-btn layui-btn-fluid" class="layui-btn" lay-submit="" type="submit"  lay-filter="login">立即登录</button>
+                <input name="remember" type="checkbox" class="layui-input layui-form-checkbox">&nbsp;&nbsp;&nbsp;Remember Me
+                <button class="layui-btn layui-btn-fluid" class="layui-btn" type="submit">立即登录</button>
                 <a class="layui-btn layui-btn-xs" lay-event="edit">免费注册</a>
                 <a class="layui-btn layui-btn-xs" lay-event="edit">忘记密码？</a>
             </div>
@@ -83,20 +85,10 @@
 </div>
 <script src="{{ asset('xadmin/lib/layui/layui.js') }}"></script>
 <script src="{{ asset('js/jquery.min.js') }}"></script>
-<script src="{{ asset('js/custompackage.js') }}"></script>
 <script src="{{ asset('home/js/jparticle.min.js') }}"></script>
 <script>
     layui.use([ 'form'], function(){
         var form = layui.form;
-        //自定义验证规则
-        form.verify({
-            username: function(value){
-                if(value.length < 6){
-                    return '名称至少得6个字符';
-                }
-            },
-            password: [/^[\S]{6,12}$/,'密码必须6到12位，且不能出现空格']
-        });
         var username = '{{$errors->first('username')}}';
         var password = '{{$errors->first('password')}}';
         var captcha = '{{$errors->first('captcha')}}';

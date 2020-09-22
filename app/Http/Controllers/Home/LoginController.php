@@ -14,7 +14,7 @@ class LoginController extends HomeController
     }
     protected $redirectTo = '/';
     public function __construct(){
-//        $this->middleware('auth.home', ['except' => 'logout']);
+        $this->middleware('auth');
     }
 
     /**
@@ -35,12 +35,12 @@ class LoginController extends HomeController
 
     protected function validateLogin(Request $request){
         $this->validate($request,[
-            $this->username() => 'required',
+            $this->username() => 'required|min:10',
             'password' => 'required',
-            'captcha' => 'required|captcha_check',
+            'captcha' => 'required|captcha',
         ],[
             'captcha.required' => trans('validation.required'),
-            'captcha.captcha_check' => trans('validation.captcha'),
+            'captcha.captcha' => trans('validation.captcha'),
         ]);
     }
 
