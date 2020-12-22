@@ -11,9 +11,12 @@ namespace App\Extensions;
 use Illuminate\Http\Request;
 trait AuthenticatesLogout{
     public function logout(Request $request){
+        //\Illuminate\Auth\SessionGuard.php：
         $this->guard()->logout();
 
         $request->session()->forget($this->guard()->getName());
+
+        $request->session()->forget('menu');
 
         $request->session()->regenerate();
 
