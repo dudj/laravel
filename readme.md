@@ -15,7 +15,8 @@ laravel项目运行或者配置
 7.生成key,命令行执行：php artisan key:generate
 生成key之后配置到.env文件
 
-8.创建一个.htaccess文件
+8.关于Apache和nginx的配置
+创建一个.htaccess文件 apache的
 <IfModule mod_rewrite.c>
     <IfModule mod_negotiation.c>
         Options -MultiViews
@@ -36,6 +37,24 @@ laravel项目运行或者配置
     RewriteCond %{HTTP:Authorization} .
     RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
 </IfModule>
+
+如果 Laravel 附带的 .htaccess 文件在 Apache 中无法使用的话，尝试下方的做法：
+
+Options +FollowSymLinks
+RewriteEngine On
+
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^ index.php [L]
+Copy
+
+
+Nginx
+如果使用 Nginx ，网站配置中加入下述代码将会转发所有的请求到 index.php 前端控制器。
+
+location / {
+    try_files $uri $uri/ /index.php?$query_string;
+}
 
 9.自定义了一些方法，并且修改了一些源码
 Illuminate.zip 解压到vendor\laravel\framework\src下
