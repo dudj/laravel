@@ -151,7 +151,7 @@ class GoodsController extends Controller
      * 商品品牌
      */
     public function brandList(){
-        return view('admin.goods.brandList');
+        return view('admin.goods.brandlist');
     }
     public function ajaxBrandList(Request $request){
         $goodsList = $this->goodsLogic->getBrandList($request);
