@@ -40,6 +40,8 @@ laravel项目运行或者配置
 9.自定义了一些方法，并且修改了一些源码
 Illuminate.zip 解压到vendor\laravel\framework\src下
 
+10.特别需要注意的点，需要将PHP的禁用函数putenv解禁
+
 此项目集成了layui+layer方式整合到laravel框架,目前做了简要的RBAC
 
 项目注意事项：
