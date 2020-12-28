@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\Home;
 
-use App\Http\Controllers\Controller;
-class IndexController extends Controller
+use App\Http\Controllers\HomeController;
+class IndexController extends HomeController
 {
     public function index(){
-        return view('home.index');
+//        var_dump(auth()->guard('home')->user());die;
+        return view('home.index.index');
     }
 }

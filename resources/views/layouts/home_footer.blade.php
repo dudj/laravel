@@ -4,30 +4,25 @@
             <div class="row">
                 <div class="col-1-3 col-footer-1">
                     <div class="wrap-col">
-                        <h3 class="widget-title">About Us</h3>
-                        <p>Ut volutpat consectetur aliquam. Curabitur auctor in nis ulum ornare. Sed consequat, augue condimentum fermentum gravida, metus elit vehicula dui. Curabitur auctor in nis ulum ornare. Sed consequat, augue condimentum fermentum</p>
-                        <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque la udantium</p>
+                        <h3 class="widget-title">关于我们</h3>
+                        <p>本着全球领先的技术，以及各个领域中的佼佼者</p>
+                        <p>致力于打造，行业中的风向标</p>
                     </div>
                 </div>
                 <div class="col-1-3 col-footer-2">
                     <div class="wrap-col">
-                        <h3 class="widget-title">Recent Post</h3>
-                        <ul>
-                            <li><a href="#">MOST VISITED COUNTRIES</a></li>
-                            <li><a href="#">5 PLACES THAT MAKE A GREAT HOLIDAY</a></li>
-                            <li><a href="#">PEBBLE TIME STEEL IS ON TRACK TO SHIP IN JULY</a></li>
-                            <li><a href="#">STARTUP COMPANY???S CO-FOUNDER TALKS ON HIS NEW PRODUCT</a></li>
-                        </ul>
+                        <h3 class="widget-title">联系我们</h3>
+                        <p>Address：123, New Lenox Chicago, IL 60606</p>
+                        <p>Phone：12360606</p>
+                        <p>Email：12360606@163.com</p>
                     </div>
                 </div>
                 <div class="col-1-3 col-footer-3">
                     <div class="wrap-col">
-                        <h3 class="widget-title">Subcribe</h3>
-                        <p>Never missed any post published in our site. Subscribe to our daly newsletter now.</p>
-                        <p>Email address:</p>
+                        <h3 class="widget-title">订阅</h3>
                         <form action="#" method="post">
-                            <input type="text" name="your-name" value="" size="40" placeholder="Your Email" />
-                            <input type="submit" value="SUBSCRIBE" class="button button-subcribe" />
+                            <input type="text" name="email" value="" size="40" placeholder="输入你的邮箱" />
+                            <input type="submit" value="订阅" class="button button-subcribe" />
                         </form>
                     </div>
                 </div>
@@ -35,10 +30,10 @@
         </div>
         <div class="copyright">
             <div class="zerogrid wrapper">
-                Copyright @ zHairSalon - More Templates <a href="http://www.cssmoban.com/" target="_blank" title="模板之家">模板之家</a> - Collect from <a href="http://www.cssmoban.com/" title="网页模板" target="_blank">网页模板</a>
+                版权 @ LD公司 - 更多信息 <a href="http://www.cssmoban.com/" target="_blank" title="网站声明">网站声明</a>
                 <ul class="quick-link">
-                    <li><a href="#">Privacy Policy</a></li>
-                    <li><a href="#">Terms of Use</a></li>
+                    <li><a href="#">隐私政策</a></li>
+                    <li><a href="#">网站地图</a></li>
                 </ul>
             </div>
         </div>
