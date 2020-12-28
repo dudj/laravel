@@ -41,12 +41,14 @@ laravel项目运行或者配置
 如果 Laravel 附带的 .htaccess 文件在 Apache 中无法使用的话，尝试下方的做法：
 
 Options +FollowSymLinks
+
 RewriteEngine On
 
 RewriteCond %{REQUEST_FILENAME} !-d
+
 RewriteCond %{REQUEST_FILENAME} !-f
+
 RewriteRule ^ index.php [L]
-Copy
 
 
 Nginx
