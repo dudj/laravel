@@ -5,7 +5,7 @@
  * Email: dudongjiangphp@163.com
  * Date: 2019/9/18
  * Time: 18:47
- * Summary: ${summary}
+ * Summary: 后台用戶退出界面
  */
 namespace App\Extensions;
 use Illuminate\Http\Request;

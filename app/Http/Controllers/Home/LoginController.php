@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Home;
 
-use App\Extensions\AuthenticatesLogout;
+use App\Extensions\AuthenticatesHomeLogout;
 use Exception;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use App\Http\Controllers\HomeController;
@@ -11,8 +11,8 @@ use Illuminate\Validation\ValidationException;
 
 class LoginController extends HomeController
 {
-    use AuthenticatesUsers,AuthenticatesLogout{
-        AuthenticatesLogout::logout insteadof AuthenticatesUsers;
+    use AuthenticatesUsers,AuthenticatesHomeLogout{
+        AuthenticatesHomeLogout::logout insteadof AuthenticatesUsers;
     }
     protected $redirectTo = '/';
     public function __construct(){

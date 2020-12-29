@@ -6,6 +6,7 @@
                 <span class="nologin">
                     @if(auth('home')->check())
                         <a style="margin-right:5px;color:#5CE1E6;" href="{{url('member/center')}}">用戶中心</a>
+                        <a style="margin-right:5px;color:#5CE1E6;" href="{{url('logout')}}">退出</a>
                     @else
                         <a style="margin-right:5px;color:#5CE1E6;" href="{{url('login')}}">登录</a>
                         <a href="{{url('register')}}">注册</a>
