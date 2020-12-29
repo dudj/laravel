@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Home;
 
 use App\Extensions\AuthenticatesLogout;
+use Exception;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use App\Http\Controllers\HomeController;
 use \Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 
 class LoginController extends HomeController
 {
@@ -14,7 +16,7 @@ class LoginController extends HomeController
     }
     protected $redirectTo = '/';
     public function __construct(){
-        $this->middleware('auth');
+        $this->middleware('guest.home');
     }
 
     /**
@@ -35,7 +37,7 @@ class LoginController extends HomeController
 
     protected function validateLogin(Request $request){
         $this->validate($request,[
-            $this->username() => 'required|min:10',
+            $this->username() => 'required',
             'password' => 'required',
             'captcha' => 'required|captcha',
         ],[

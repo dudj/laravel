@@ -74,5 +74,6 @@ class Kernel extends HttpKernel
         'auth.admin' => \App\Http\Middleware\AuthAdmin::class,
         'guest.admin' => \App\Http\Middleware\GuestAdmin::class,
         'auth.home' => \App\Http\Middleware\AuthHome::class,
+        'guest.home' => \App\Http\Middleware\GuestAdmin::class,
     ];
 }

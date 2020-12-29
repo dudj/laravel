@@ -5,8 +5,8 @@
 <!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
 <head>
     <meta charset="utf-8">
-    <title>{{ config('app.name', 'LD') }} - 商城</title>
-    <meta name="description" content="LD商城">
+    <title>{{ config('app.frontName') }}</title>
+    <meta name="description" content="{{ config('app.frontName') }}">
     <meta name="author" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link rel="stylesheet" href="{{ asset('home/css/zerogrid.css') }}">

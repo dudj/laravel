@@ -46,6 +46,15 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
+        if ($exception instanceof \Illuminate\Validation\ValidationException) {
+
+            $e = new Exception(iconv("UTF-8", "GBK//IGNORE", $this->handleValidationException($request, $exception)));
+            return parent::render($request, $exception);
+//            return response()->json([
+//                'msg' => $this->handleValidationException($request, $exception),
+//                'code' => 400
+//            ]);
+        }
         if ($exception) {
             if($request->ajax()){
                 if($exception->getMessage()){
@@ -83,6 +92,28 @@ class Handler extends ExceptionHandler
         return parent::render($request, $exception);
     }
 
+    /**
+     * @param $request
+     * @param $e
+     * @return null|string
+     * 获取自带数据验证错误信息
+     */
+    protected function handleValidationException($request, $e)
+    {
+        $errors = @$e->validator->errors()->toArray();
+        $message = null;
+        if (count($errors)) {
+            $firstKey = array_keys($errors)[0];
+            $message = @$e->validator->errors()->get($firstKey)[0];
+            if (strlen($message) == 0) {
+                $message = "An error has occurred when trying to register";
+            }
+        }
+        if ($message == null) {
+            $message = "An unknown error has occured";
+        }
+        return $message;
+    }
     /**
      * Convert an authentication exception into an unauthenticated response.
      *

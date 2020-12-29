@@ -4,8 +4,12 @@
             {{--nav--}}
             <div class="nav">
                 <span class="nologin">
-                    <a style="margin-right:5px;color:#5CE1E6;" href="{{url('login')}}">登录</a>
-                    <a href="{{url('register')}}">注册</a>
+                    @if(auth('home')->check())
+                        <a style="margin-right:5px;color:#5CE1E6;" href="{{url('member/center')}}">用戶中心</a>
+                    @else
+                        <a style="margin-right:5px;color:#5CE1E6;" href="{{url('login')}}">登录</a>
+                        <a href="{{url('register')}}">注册</a>
+                    @endif
                 </span>
                 <ul>
                     <li><a href="{{url('/')}}"><span>我的订单</span></a></li>

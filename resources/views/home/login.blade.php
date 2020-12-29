@@ -3,7 +3,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-        <title>LD奢侈品登录</title>
+        <title><?=config('app.frontName')?></title>
         <link href="{{ asset('xadmin/lib/layui/css/layui.css') }}" rel="stylesheet">
         <link href="{{ asset('home/css/login.css') }}" rel="stylesheet">
         <style>
@@ -16,7 +16,7 @@
 <div class="layui-fluid">
     <div class="layui-row layui-col-space15">
         <div class="layui-col-sm12 layui-col-md12 zyl_mar_01">
-            <blockquote class="layui-elem-quote"><a href="{{url('/')}}">LD奢侈品</a></blockquote>
+            <blockquote class="layui-elem-quote"><a href="{{url('/')}}"><?=config('app.frontName')?></a></blockquote>
         </div>
     </div>
 </div>
@@ -38,20 +38,20 @@
 <!-- Footer -->
 <div class="layui-row">
     <div class="layui-col-sm12 layui-col-md12 zyl_center zyl_mar_01">
-        © 2020 - LD奢侈品登录界面 || LD界面版权所有
+        © 2020 - <?=config('app.frontName')?>登录界面 || <?=config('app.frontName')?>界面版权所有
     </div>
 </div>
 <!-- LoginForm -->
 <div class="zyl_lofo_main">
     <fieldset class="layui-elem-field layui-field-title zyl_mar_02">
-        <legend>欢迎登录 - LD商城</legend>
+        <legend>欢迎登录 - <?=config('app.frontName')?></legend>
     </fieldset>
     <div class="layui-row layui-col-space15">
         <form class="layui-form zyl_pad_01" method="post" action="{{ url('/login') }}">
             {{ csrf_field() }}
             <div class="layui-col-sm12 layui-col-md12">
                 <div class="layui-form-item">
-                    <input type="text" name="username" lay-verify="required" autocomplete="off" placeholder="账号" class="layui-input">
+                    <input type="text" name="username" value="{{ old('username') }}" lay-verify="required" autocomplete="off" placeholder="账号" class="layui-input">
                     <i class="layui-icon layui-icon-username zyl_lofo_icon"></i>
                 </div>
             </div>
@@ -76,9 +76,11 @@
             </div>
             <div class="layui-col-sm12 layui-col-md12">
                 <input name="remember" type="checkbox" class="layui-input layui-form-checkbox">&nbsp;&nbsp;&nbsp;Remember Me
-                <button class="layui-btn layui-btn-fluid" class="layui-btn" type="submit">立即登录</button>
-                <a class="layui-btn layui-btn-xs" lay-event="edit">免费注册</a>
+                <a class="layui-btn layui-btn-xs" style="margin-left:5%" lay-event="edit">免费注册</a>
                 <a class="layui-btn layui-btn-xs" lay-event="edit">忘记密码？</a>
+            </div>
+            <div class="layui-col-sm12 layui-col-md12" style="margin-top:10px;">
+                <button class="layui-btn layui-btn-fluid" lay-submit lay-filter="login" class="layui-btn" type="submit">立即登录</button>
             </div>
         </form>
     </div>
