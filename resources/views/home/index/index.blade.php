@@ -40,61 +40,29 @@
                     <div class="row wrap-box"><!--Start Box-->
                         <div class="header">
                             <div class="wrapper">
-                                <h2 class="color-yellow">Team</h2>
+                                <h2 class="color-yellow">商品</h2>
                                 <hr class="line02">
-                                <div class="intro">Meet Our Team</div>
+                                <div class="intro">热销商品</div>
                             </div>
                         </div>
                         <div class="row"><!--Start Box-->
-                            <div class="col-1-4">
-                                <div class="wrap-col item">
-                                    <div class="portfolio-box">
-                                        <img src="home/images/ava-4.jpg"alt="">
-                                    </div>
-                                    <div class="item-content">
-                                        <h3><a href="#">Nina Santos</a></h3>
-                                        <span>Hairdresser</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-1-4">
-                                <div class="wrap-col item">
-                                    <div class="portfolio-box">
-                                        <img src="home/images/ava-5.jpg"alt="">
-                                    </div>
-                                    <div class="item-content">
-                                        <h3><a href="#">Nina Santos</a></h3>
-                                        <span>Stylist</span>
+                            @foreach($goodsList as $vo)
+                                <div class="col-1-4">
+                                    <div class="wrap-col item">
+                                        <div class="portfolio-box">
+                                            <img src="{{$vo['original_img']}}"alt="">
+                                        </div>
+                                        <div class="item-content">
+                                            <h3><a href="#">{{$vo['cat_name']}}</a></h3>
+                                            <span>{{$vo['goods_name']}}</span>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-1-4">
-                                <div class="wrap-col item">
-                                    <div class="portfolio-box">
-                                        <img src="home/images/ava-6.jpg"alt="">
-                                    </div>
-                                    <div class="item-content">
-                                        <h3><a href="#">Nina Santos</a></h3>
-                                        <span>Makeup Artist</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-1-4">
-                                <div class="wrap-col item">
-                                    <div class="portfolio-box">
-                                        <img src="home/images/ava-7.jpg"alt="">
-                                    </div>
-                                    <div class="item-content">
-                                        <h3><a href="#">Nina Santos</a></h3>
-                                        <span>Makeup Artist</span>
-                                    </div>
-                                </div>
-                            </div>
+                            @endforeach
                         </div>
                     </div>
                 </div>
             </section>
-
             <!-----------------content-box-5-------------------->
             <section class="content-box boxstyle-3 box-5">
                 <div class="zerogrid" style="clear:none;">
