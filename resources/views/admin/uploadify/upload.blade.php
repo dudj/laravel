@@ -107,7 +107,7 @@
 <script type="text/javascript" src="/plugins/webuploader/upload.js"></script>
 <script>
 	$(function(){
-		moudle = 'Admin';
+		moudle = 'admin';
 		var config = {
 			"swf":"/plugins/webuploader/Uploader.swf",
 			"server":"<?= $info['upload']?>",
