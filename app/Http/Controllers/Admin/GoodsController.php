@@ -84,7 +84,7 @@ class GoodsController extends Controller
         try{
             $ids = $request->ids;
             if(empty($ids)) return $this->error([], '非法操作');
-            $ids = [rtrim($ids,",")];
+            $ids = explode(',',rtrim($ids,","));
             $data = DB::table('goods_category')->whereIn('parent_id',$ids)->get()->groupBy('id')->toArray();
             if($data){
                 return $this->error('', '有子类不能删除');
@@ -302,7 +302,7 @@ class GoodsController extends Controller
         try{
             $ids = $request->ids;
             if(empty($ids)) return $this->error([], '非法操作');
-            $goods_ids = [rtrim($ids,",")];
+            $goods_ids = explode(',',rtrim($ids,","));
             //当前商品如果有订单，不允许删除
             //团购
             DB::table('goods')->whereIn('goods_id',$goods_ids)->delete();  //商品表
@@ -329,7 +329,7 @@ class GoodsController extends Controller
         try{
             $ids = $request->ids;
             if(empty($ids)) return $this->error([], '非法操作');
-            $ids = [rtrim($ids,",")];
+            $ids = explode(',',rtrim($ids,","));
             //当前品牌如果有对应的商品 不允许删除
             $data = DB::table('goods')->whereIn('brand_id',$ids)->get()->groupBy('brand_id')->toArray();
             if($data){
