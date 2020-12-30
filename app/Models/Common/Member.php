@@ -41,6 +41,18 @@ class Member extends Model
         'mobile.regex' => '手机号格式不对',
         'password.regex' => '密码格式不对',
     ];
+    public $homeRule = [
+        'sex' => 'required',
+        'birthday' => 'required',
+        'captcha' => 'required|captcha',
+    ];
+    //错误信息
+    protected $homeMessage = [
+        'sex.required' => '性別必填',
+        'birthday.required' => '生日必填',
+        'captcha.required' => '验证码必填',
+        'captcha.captcha' => '验证码错误',
+    ];
     /**
      * @param $request
      * @param $type
@@ -52,6 +64,7 @@ class Member extends Model
         try{
             $model = new Member();
             $validator = '';
+            $data = $request->all();
             if($type == 'admin'){
                 if($request->id){
                     $model->adminRule['username'] = 'required|min:3|max:150|unique:member,username,'.$request->id.',id';
@@ -62,15 +75,23 @@ class Member extends Model
                     }
                 }
                 $validator = Validator::make($request->all(), $model->adminRule,$model->adminMessage);
-            }else{
-
+            }else if($type == 'home'){
+                if($request->id){
+                    $model->adminRule['username'] = 'required|min:3|max:150|unique:member,username,'.$request->id.',id';
+                    $model->adminRule['mobile'] = 'required|regex:/^1\d{10}$/|unique:member,mobile,'.$request->id.',id';
+                    $model->adminRule['email'] = 'required|regex:/^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/|unique:member,email,'.$request->id.',id';
+                    if($request->password == ''){
+                        unset($model->adminRule['password']);
+                    }
+                }
+                $data['birthday'] = strtotime($data['birthday']);
+                $validator = Validator::make($request->all(), array_merge($model->homeRule,$model->adminRule),array_merge($model->homeMessage,$model->adminMessage));
             }
             if($validator->fails()){
                 foreach ($validator->errors()->all() as $message) {
                     return ['code'=>-1,'msg'=>$message];
                 }
             }
-            $data = $request->all();
             $data = filterFields($data, new Member());
             if(isset($data['id']) && $data['id'] > 0){
                 $member = DB::table($this->table)->where('id','=',$data['id'])->first();

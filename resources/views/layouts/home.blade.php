@@ -32,6 +32,7 @@
     <script src="{{ asset('home/js/html5.js') }}"></script>
     <script src="{{ asset('home/js/css3-mediaqueries.js') }}"></script>
     <![endif]-->
+    <script src="{{ asset('js/custompackage.js') }}"></script>
 </head>
 <body>
 <div class="wrap-body">
