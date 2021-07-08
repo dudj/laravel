@@ -1,40 +1,39 @@
 @section('home_footer')
     <footer>
-        <div class="zerogrid wrap-footer">
-            <div class="row">
-                <div class="col-1-3 col-footer-1">
-                    <div class="wrap-col">
-                        <h3 class="widget-title">关于我们</h3>
-                        <p>本着全球领先的技术，以及各个领域中的佼佼者</p>
-                        <p>致力于打造，行业中的风向标</p>
-                    </div>
+        <div class="house-footer">
+            <div class="layui-container">
+                <div class="intro">
+                    <span class="first">
+                        <i class="layui-icon layui-icon-house-shield"></i>
+                        7天无理由退换货
+                    </span>
+                    <span class="second">
+                        <i class="layui-icon layui-icon-house-car"></i>
+                        满199元全场包邮
+                    </span>
+                    <span class="third">
+                        <i class="layui-icon layui-icon-house-diamond"></i>
+                        100%品质保证
+                    </span>
+                    <span class="last">
+                        <i class="layui-icon layui-icon-house-tel"></i>
+                        客服400-8888-888
+                    </span>
                 </div>
-                <div class="col-1-3 col-footer-2">
-                    <div class="wrap-col">
-                        <h3 class="widget-title">联系我们</h3>
-                        <p>Address：123, New Lenox Chicago, IL 60606</p>
-                        <p>Phone：12360606</p>
-                        <p>Email：12360606@163.com</p>
-                    </div>
+                <div class="about">
+                    <span class="layui-breadcrumb" lay-separator="|" style="visibility: visible;">
+                        <a href="/about.html">关于我们</a>
+                        <span lay-separator="">|</span>
+                        <a href="/help.html">帮助中心</a>
+                        <span lay-separator="">|</span>
+                        <a href="/service.html">售后服务</a>
+                        <span lay-separator="">|</span>
+                        <a href="/delivery.html">配送服务</a>
+                        <span lay-separator="">|</span>
+                        <a href="/supply.html">关于货源</a>
+                    </span>
+                    <p>版权 @ <?=config('app.frontName')?> - 更多信息 © 2012-2021</p>
                 </div>
-                <div class="col-1-3 col-footer-3">
-                    <div class="wrap-col">
-                        <h3 class="widget-title">订阅</h3>
-                        <form action="#" method="post">
-                            <input type="text" name="email" value="" size="40" placeholder="输入你的邮箱" />
-                            <input type="submit" value="订阅" class="button button-subcribe" />
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="copyright">
-            <div class="zerogrid wrapper">
-                版权 @ LD公司 - 更多信息 <a href="http://www.cssmoban.com/" target="_blank" title="网站声明">网站声明</a>
-                <ul class="quick-link">
-                    <li><a href="#">隐私政策</a></li>
-                    <li><a href="#">网站地图</a></li>
-                </ul>
             </div>
         </div>
     </footer>

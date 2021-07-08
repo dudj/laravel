@@ -139,7 +139,13 @@ header #logo{}
 .content-box.box-3 .portfolio-box:hover .portfolio-box-caption .portfolio-box-caption-content .project-category,
 .content-box.box-3 .portfolio-box:hover .portfolio-box-caption .portfolio-box-caption-content .project-name
 {display: block !important;}
-
+.portfolio-box:hover img {
+	transform: scale(1.1);
+	transition: 1.2s;
+}
+.portfolio-box img {
+	transition: 1.2s;
+}
 .content-box.box-4 {text-align: center;}
 .content-box.box-4 .item{}
 .content-box.box-4 .item .item-content{padding: 20px;}
@@ -549,4 +555,16 @@ textarea {display:block;width:100%;height:200px;background-color:#F3F3F3; color:
 	line-height:23px;
 	overflow:hidden;
 	display:block;
+}
+
+.title{
+	font-size: 18px;
+	line-height: 78px;
+	position: relative;
+}
+.title a{
+	color: #999;
+	font-size: 14px;
+	position: absolute;
+	right: 0;
 }

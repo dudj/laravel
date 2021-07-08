@@ -2,136 +2,71 @@
 @extends('layouts.home_nav')
 @section('home_content')
     <section id="container">
-        <div class="wrap-container">
-            <!-----------------焦点图-------------------->
-            <section class="content-box boxstyle-1 box-1">
-                <div id="zSlider">
-                    <div id="picshow">
-                        <div id="picshow_img">
-                            <ul>
-                                <li><a href="#"><img src="/home/images/slider-1.jpg"></a></li>
-                                <li><a href="#"><img src="/home/images/slider-2.jpg"></a></li>
-                            </ul>
-                        </div>
-                        <div id="picshow_tx">
-                            <ul>
-                                <li>
-                                    <h3><a href="#">垂直轮播插件标题信息</a></h3>
-                                    <p>上海第一家死飞精品店，由三个外国人与一中国人联合创办，主要经营客订个性单速车，帮助他们得到自己梦想中的车架。</p>
-                                </li>
-                                <li>
-                                    <h3><a href="#">垂直轮播插件标题信息</a></h3>
-                                    <p>冰岛有“火山岛”、“雾岛”、“冰封的土地”、“冰与火之岛”之称。有想过在这里骑游吗？下面看看Ovegur的冰岛骑游之旅吧。</p>
-                                </li>
-                            </ul>
-                        </div>
+        <!-- 焦点图 -->
+        <div class="layui-fulid">
+            <div class="layui-carousel house-carousel" id="house-carousel" lay-anim="" lay-indicator="inside" lay-arrow="none" style="width: 100%; height: 500px;">
+                <div carousel-item="">
+                    <div class="layui-this">
+                        <img src="/home/images/slider-1.jpg">
                     </div>
-                    <div id="select_btn">
-                        <ul>
-                            <li><a href="#"><img src="/home/images/slider-1.jpg"><span class="select_text">垂直轮播插件标题信息</span><span class="select_date">2019/01/16</span></a></li>
-                            <li><a href="#"><img src="/home/images/slider-2.jpg"><span class="select_text">垂直轮播插件标题信息</span><span class="select_date">2019/01/15</span></a></li>
-                        </ul>
+                    <div class="">
+                        <img src="/home/images/slider-2.jpg">
                     </div>
                 </div>
-            </section>
-            <!-----------------content-box-4-------------------->
-            <section class="content-box boxstyle-1 box-4">
-                <div class="zerogrid">
-                    <div class="row wrap-box"><!--Start Box-->
-                        <div class="header">
-                            <div class="wrapper">
-                                <h2 class="color-yellow">商品</h2>
-                                <hr class="line02">
-                                <div class="intro">热销商品</div>
-                            </div>
-                        </div>
-                        <div class="row"><!--Start Box-->
-                            @foreach($goodsList as $vo)
-                                <div class="col-1-4">
-                                    <div class="wrap-col item">
-                                        <div class="portfolio-box">
-                                            <img src="{{$vo['original_img']}}"alt="">
-                                        </div>
-                                        <div class="item-content">
-                                            <h3><a href="#">{{$vo['cat_name']}}</a></h3>
-                                            <span>{{$vo['goods_name']}}</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            @endforeach
-                        </div>
-                    </div>
+                <div class="layui-carousel-ind">
+                    <ul>
+                        <li class="layui-this"></li>
+                        <li class=""></li>
+                    </ul>
                 </div>
-            </section>
-            <!-----------------content-box-5-------------------->
-            <section class="content-box boxstyle-3 box-5">
-                <div class="zerogrid" style="clear:none;">
-                    <div class="row wrap-box"><!--Start Box-->
-                        <div class="header">
-                            <div class="wrapper">
-                                <h2 class="color-yellow">From the Blog</h2>
-                                <hr class="line03">
-                                <div class="intro">We make beauty</div>
-                            </div>
-                        </div>
-                        <div class="row"><!--Blog Box-->
-                            <div class="col-1-3">
-                                <div class="wrap-col item">
-                                    <div class="portfolio-box">
-                                        <img src="home/images/portfolio-1.jpg"alt="">
-                                    </div>
-                                    <div class="item-content">
-                                        <h3><a href="single.html">Discover Natural Sources for Hair</a></h3>
-                                        <span><i class="fa fa-calendar"></i> August 10, 2016 <i class="fa fa-comments"></i> 1 Comment</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-1-3">
-                                <div class="wrap-col item">
-                                    <div class="portfolio-box">
-                                        <img src="home/images/portfolio-2.jpg"alt="">
-                                    </div>
-                                    <div class="item-content">
-                                        <h3><a href="single.html">Discover Natural Sources for Hair</a></h3>
-                                        <span><i class="fa fa-calendar"></i> August 10, 2016 <i class="fa fa-comments"></i> 1 Comment</span>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-1-3">
-                                <div class="wrap-col item">
-                                    <div class="portfolio-box">
-                                        <img src="home/images/portfolio-3.jpg"alt="">
-                                    </div>
-                                    <div class="item-content">
-                                        <h3><a href="single.html">Discover Natural Sources for Hair</a></h3>
-                                        <span><i class="fa fa-calendar"></i> August 10, 2016 <i class="fa fa-comments"></i> 1 Comment</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row"><!--Testimonials Box-->
-                            <div id="owl-testimonials" class="owl-carousel t-center">
-                                <div class="item testimonials-item">
-                                    <img src="home/images/partner3.png" />
-                                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley.</p>
-                                    <h5>Catherine Grace - America</h5>
-                                </div>
-                                <div class="item testimonials-item">
-                                    <img src="home/images/partner1.png" />
-                                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley.</p>
-                                    <h5>Catherine Grace - America</h5>
-                                </div>
-                                <div class="item testimonials-item">
-                                    <img src="home/images/partner2.png" />
-                                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley.</p>
-                                    <h5>Catherine Grace - America</h5>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                <button class="layui-icon layui-carousel-arrow" lay-type="sub"></button>
+                <button class="layui-icon layui-carousel-arrow" lay-type="add"></button>
+            </div>
+        </div>
+        <div class="layui-container">
+            <div class="hot-sell">
+                <p class="house-title">热销推荐<a href="">更多优品 &gt;</a>
+                </p>
+                <div class="layui-row layui-col-space20">
+                    @foreach($goodsList['hot']['data'] as $vo)
+                        <a href="/house/{{$vo['goods_id']}}.html" class="layui-col-xs3 text">
+                            <div>
+                                <img src="{{$vo['original_img']}}"></div>
+                            <p>{{$vo['goods_name']}}</p>
+                            <p class="price">￥{{$vo['shop_price']}}</p>
+                        </a>
+                    @endforeach
                 </div>
-            </section>
+            </div>
+            <div class="hot-sell">
+                <p class="house-title">新品推荐<a href="">更多新品 &gt;</a>
+                </p>
+                <div class="layui-row layui-col-space20">
+                    @foreach($goodsList['new']['data'] as $vo)
+                        <a href="/house/{{$vo['goods_id']}}.html" class="layui-col-xs3 text">
+                            <div>
+                                <img src="{{$vo['original_img']}}"></div>
+                            <p>{{$vo['goods_name']}}</p>
+                            <p class="price">￥{{$vo['shop_price']}}</p>
+                        </a>
+                    @endforeach
+                </div>
+            </div>
+            <div class="hot-sell">
+                {{--推荐产品--}}
+                <p class="house-title">猜你喜欢<a href="">更多 &gt;</a>
+                </p>
+                <div class="layui-row layui-col-space20">
+                    @foreach($goodsList['recommend']['data'] as $vo)
+                        <a href="/house/{{$vo['goods_id']}}.html" class="layui-col-xs3 text">
+                            <div>
+                                <img src="{{$vo['original_img']}}"></div>
+                            <p>{{$vo['goods_name']}}</p>
+                            <p class="price">￥{{$vo['shop_price']}}</p>
+                        </a>
+                    @endforeach
+                </div>
+            </div>
         </div>
     </section>
 @endsection

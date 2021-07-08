@@ -173,7 +173,7 @@ class GoodsLogic extends Model
      * @return mixed
      * 根据查询条件获取数据
      */
-    public function getGoodsList($request){
+    public function getGoodsList(Request $request){
         if(isset($request->sortfield)){
             $request->sortfield = 'goods_id';
         }
@@ -181,7 +181,7 @@ class GoodsLogic extends Model
             $request->sorttype = 'desc';
         }
         $param = [
-            'paramWhere' => ['brand_id','is_on_sale','suppliers_id'],
+            'paramWhere' => ['brand_id','is_on_sale','suppliers_id','is_new','is_hot'],
             'paramLike' => ['key_word'],
             'paramDate' => [],
             'paramIn' => [
@@ -192,7 +192,7 @@ class GoodsLogic extends Model
             //=
             foreach($param['paramWhere'] as $val){
                 if ($request->has($val) && $request->$val != '') {
-                    $query->where($val, '=', $request->$val);
+                    $query->where('g.'.$val, '=', $request->$val);
                 }
             }
             //特殊操作 传递的是字段

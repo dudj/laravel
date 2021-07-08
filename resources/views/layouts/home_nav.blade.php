@@ -1,66 +1,71 @@
 @section('home_nav')
     <header>
-        <div class="wrap-header">
-            {{--nav--}}
-            <div class="nav">
-                <span class="nologin">
-                    @if(auth('home')->check())
-                        <a style="margin-right:5px;color:#5CE1E6;" href="{{url('member/center')}}">用戶中心</a>
-                        <a style="margin-right:5px;color:#5CE1E6;" href="{{url('logout')}}">退出</a>
-                    @else
-                        <a style="margin-right:5px;color:#5CE1E6;" href="{{url('login')}}">登录</a>
-                        <a href="{{url('register')}}">注册</a>
-                    @endif
-                </span>
-                <ul>
-                    <li><a href="{{url('/')}}"><span>我的订单</span></a></li>
-                    <li><a href="{{url('common/contact')}}"><span>我的浏览</span></a></li>
-                    <li><a href="{{url('common/contact')}}"><span>我的收藏</span></a></li>
-                </ul>
-            </div>
-            <!---Main Header--->
-            <div class="main-header">
-                <div class="zerogrid">
-                    <div class="row">
-                        <div class="col-1-4">
-							<a href="/Home/index/index.html">
-                                <img src="/home/images/Ld.png" style="width:160px;height:80px">
-                            </a>
-                        </div>
-                        <div class="col-2-4">
-                            <form id="searchForm" name="" method="get" action="/Home/Goods/search.html" class="home-index-search-form">
-                                <input autocomplete="off" name="name" id="name" type="text" value="" class="home-index-search-input" placeholder="请输入搜索关键字...">
-                                <button type="submit" class="home-index-search-button">搜索</button>
-                            </form>
-                            <ul id="searchTopList">
-                                {{--一小时更新一次数据--}}
-                                <li><a href="{{url('/')}}">我的订单</a></li>
-                                <li><a href="{{url('/')}}">我的浏览</a></li>
-                                <li><a href="{{url('/')}}">我的收藏</a></li>
-                            </ul>
-                        </div>
-                    </div>
+        <div class="house-header">
+            <div class="layui-container">
+                <div class="house-nav">
+                    <span class="layui-breadcrumb memberinfo" lay-separator="|" style="visibility: visible;">
+                        @if(auth('home')->check())
+                            <a style="margin-right:5px;color:#5CE1E6;" href="{{url('member/center')}}">用戶中心</a><span lay-separator="">|</span>
+                            <a href="/member/">我的订单</a><span lay-separator="">|</span>
+                            <a style="margin-right:5px;color:#5CE1E6;" href="{{url('logout')}}">退出</a><span lay-separator="">|</span>
+                        @else
+                            <a style="margin-right:5px;color:#5CE1E6;" href="{{url('login')}}">登录</a><span lay-separator="">|</span>
+                            <a href="{{url('register')}}">注册</a><span lay-separator="">|</span>
+                        @endif
+                        <a href="http://wpa.qq.com/msgrd?v=3&amp;uin=858265175&amp;site=qq&amp;menu=yes" target="_blank">在线客服</a>
+                    </span>
+                    <span class="layui-breadcrumb house-breadcrumb-icon" lay-separator=" " style="visibility: visible;">
+                        <a id="search"><i class="layui-icon layui-icon-house-find"></i></a>
+                        <span lay-separator=""> </span>
+                        <a href="/member/">
+                            <i class="layui-icon layui-icon-username"></i>
+                        </a>
+                        <span lay-separator=""> </span>
+                        <a href="/plus/car.php">
+                            <i class="layui-icon layui-icon-house-shop"></i>
+                        </a>
+                    </span>
                 </div>
-            </div>
-            <!---Top Menu--->
-            <div id="cssmenu">
-                <ul>
-                    <li class="active"><a href="{{url('/')}}"><span>首页</span></a></li>
-                    <li class="last"><a href="{{url('common/contact')}}"><span>联系我们</span></a></li>
+                <div class="house-banner layui-form">
+                    <a class="banner" href="/">
+                        <img src="/home/images/Ld.png" style="width:160px;height:80px">
+                    </a>
+                    <div class="layui-input-inline">
+                        <input type="text" placeholder="搜索好物" class="layui-input">
+                        <i class="layui-icon layui-icon-house-find"></i>
+                    </div>
+                    <a class="shop" href="/plus/car.php">
+                        <i class="layui-icon layui-icon-house-shop"></i>
+                        <span class="layui-badge totalNum">0</span>
+                    </a>
+                </div>
+                <ul class="layui-nav close">
+                    <li class="layui-nav-item layui-this">
+                        <a href="/">首页</a>
+                    </li>
+                    <li class="layui-nav-item ">
+                        <a href="/house/">居家用品</a>
+                    </li>
+                    <li class="layui-nav-item ">
+                        <a href="/device/">小家电</a>
+                    </li>
+                    <li class="layui-nav-item ">
+                        <a href="/wash/">洗护</a>
+                    </li>
+                    <li class="layui-nav-item ">
+                        <a href="/kitchen/">厨具</a>
+                    </li>
+                    <li class="layui-nav-item ">
+                        <a href="/supplies/">日用品</a>
+                    </li>
+                    <span class="layui-nav-bar" style="left: 949px; top: 60px; width: 0px; opacity: 0;"></span>
                 </ul>
+                <button id="switch">
+                    <span></span>
+                    <span class="second"></span>
+                    <span class="third"></span>
+                </button>
             </div>
         </div>
-
     </header>
-    <script>
-        $(document).ready(function(){
-            var url = window.location.href;
-            $("#cssmenu>ul>li").removeClass('active');
-            $("#cssmenu>ul>li").each(function(){
-                if($(this).children('a').attr('href') == url){
-                    $(this).addClass('active');
-                }
-            });
-        })
-    </script>
 @endsection

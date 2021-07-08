@@ -77,6 +77,7 @@
     layui.use(['form','layer'], function(){
         $ = layui.jquery;
         var form = layui.form,layer = layui.layer;
+        var check_val = [];
         form.verify({
             name: function(value) {
                 if (value.length < 1) {
@@ -86,7 +87,6 @@
             isall: function(value) {
                 var isall = $("input[name='isall']:checked").val();
                 if (isall == 0) {
-                    var check_val = [];
                     $('.ids:checked').each(function(){
                         check_val.push($(this).val());
                     });
@@ -103,6 +103,10 @@
         });
         //监听提交
         form.on('submit(add)', function(data){
+            var isall = $("input[name='isall']:checked").val();
+            if (isall == 0) {
+                data.field.nodestr = check_val;
+            }
             var resStatus = commonAjax('{{url('admin/group/store')}}', 'post', Base64.encode(JSON.stringify(data.field)), 'json',false);
             //发异步，把数据提交给php
             if(resStatus > 0){

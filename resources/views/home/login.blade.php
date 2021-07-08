@@ -76,7 +76,7 @@
             </div>
             <div class="layui-col-sm12 layui-col-md12">
                 <input name="remember" type="checkbox" class="layui-input layui-form-checkbox">&nbsp;&nbsp;&nbsp;Remember Me
-                <a class="layui-btn layui-btn-xs" style="margin-left:5%" lay-event="edit">免费注册</a>
+                <a class="layui-btn layui-btn-xs" style="margin-left:5%" href="/register" lay-event="edit">免费注册</a>
                 <a class="layui-btn layui-btn-xs" lay-event="edit">忘记密码？</a>
             </div>
             <div class="layui-col-sm12 layui-col-md12" style="margin-top:10px;">
