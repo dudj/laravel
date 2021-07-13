@@ -4,7 +4,7 @@
     <section id="container">
         <!-- 焦点图 -->
         <div class="layui-fulid">
-            <div class="layui-carousel house-carousel" id="house-carousel" lay-anim="" lay-indicator="inside" lay-arrow="none" style="width: 100%; height: 500px;">
+            <div class="layui-carousel home-carousel" id="home-carousel" lay-anim="" lay-indicator="inside" lay-arrow="none" style="width: 100%; height: 500px;">
                 <div carousel-item="">
                     <div class="layui-this">
                         <img src="/home/images/slider-1.jpg">
@@ -25,11 +25,11 @@
         </div>
         <div class="layui-container">
             <div class="hot-sell">
-                <p class="house-title">热销推荐<a href="">更多优品 &gt;</a>
+                <p class="home-title">热销推荐<a href="">更多优品 &gt;</a>
                 </p>
                 <div class="layui-row layui-col-space20">
                     @foreach($goodsList['hot']['data'] as $vo)
-                        <a href="/house/{{$vo['goods_id']}}.html" class="layui-col-xs3 text">
+                        <a href="/purchase/goodDetail/?id={{$vo['goods_id']}}" class="layui-col-xs3 text">
                             <div>
                                 <img src="{{$vo['original_img']}}"></div>
                             <p>{{$vo['goods_name']}}</p>
@@ -39,11 +39,11 @@
                 </div>
             </div>
             <div class="hot-sell">
-                <p class="house-title">新品推荐<a href="">更多新品 &gt;</a>
+                <p class="home-title">新品推荐<a href="">更多新品 &gt;</a>
                 </p>
                 <div class="layui-row layui-col-space20">
                     @foreach($goodsList['new']['data'] as $vo)
-                        <a href="/house/{{$vo['goods_id']}}.html" class="layui-col-xs3 text">
+                        <a href="/purchase/goodDetail/?id={{$vo['goods_id']}}" class="layui-col-xs3 text">
                             <div>
                                 <img src="{{$vo['original_img']}}"></div>
                             <p>{{$vo['goods_name']}}</p>
@@ -54,11 +54,11 @@
             </div>
             <div class="hot-sell">
                 {{--推荐产品--}}
-                <p class="house-title">猜你喜欢<a href="">更多 &gt;</a>
+                <p class="home-title">猜你喜欢<a href="">更多 &gt;</a>
                 </p>
                 <div class="layui-row layui-col-space20">
                     @foreach($goodsList['recommend']['data'] as $vo)
-                        <a href="/house/{{$vo['goods_id']}}.html" class="layui-col-xs3 text">
+                        <a href="/purchase/goodDetail/?id={{$vo['goods_id']}}" class="layui-col-xs3 text">
                             <div>
                                 <img src="{{$vo['original_img']}}"></div>
                             <p>{{$vo['goods_name']}}</p>

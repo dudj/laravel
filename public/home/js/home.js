@@ -77,14 +77,14 @@ layui.config({
     // 会员状态和购物车数量
     $(function(){
         //详情页——选中
-        var ddDetail = $(".house-detail").find(".shopChoose").find("dl").children("dd");
+        var ddDetail = $(".home-detail").find(".shopChoose").find("dl").children("dd");
         ddDetail.each(function(){
             if($(this).hasClass("active")){
                 $(this).append('<i class="layui-icon layui-icon-ok active"></i>');
             };
         });
         //详情页——数量
-        $(".house-detail").find(".shopChoose").find(".btn-input").children("input").val("1");
+        $(".home-detail").find(".shopChoose").find(".btn-input").children("input").val("1");
         $(".paymentarr button").click(function(){
             $(this).blur().addClass("layui-this").siblings().removeClass("layui-this");
             var paytype = $(this).data('id');
@@ -96,8 +96,7 @@ layui.config({
             $("input[name='pid']").val(pid);
         });
         $.ajaxSetup({async:false});
-        $.get("/plus/car.php?dopost=carts",function(res){$('.totalNum').text(res.cart_count);},'json');
-        $.get("/member/ajax_loginsta.php",function(res){$('.memberinfo a:first-child').text(res.userid);},'json');
+        ajaxCarts('carts');
     });
     // 点击购物车按钮
     $(document).on('click','.addcar',function () {
@@ -121,68 +120,123 @@ layui.config({
     });
     //购物车——表格
     table.render({
-        elem: '#house-usershop-table'
-        ,url:  '/plus/car.php?dopost=carinfo'
-        ,skin: 'line'
-        ,cols: [[
-            {type:'checkbox', width:50}
-            ,{title:'商品', align:'center', minWidth:260, templet: '#goodsTpl'}
-            ,{title:'单价', align:'center', minWidth:160, templet: '#priceTpl'}
-            ,{title:'数量', align:'center', width:150, templet: '#numTpl'}
-            ,{title:'小计', align:'center', width:120, templet: '#totalTpl'}
-            ,{title:'操作', align:'center', width:100, templet: '#shopTpl'}
-        ]]
-        ,done: function(res, curr, count){
+        elem: '#home-usershop-table',
+        url:  '/purchase/cart',
+        skin: 'line',
+        method:'post',
+        where:{'type':'list'},
+        cols: [[
+            {type:'checkbox', width:50},
+            {title:'商品', align:'center', minWidth:260, templet: '#goodsTpl'},
+            {title:'单价', align:'center', minWidth:160, templet: '#priceTpl'},
+            {title:'数量', align:'center', width:150, templet: '#numTpl'},
+            {title:'小计', align:'center', width:120, templet: '#totalTpl'},
+            {title:'操作', align:'center', width:100, templet: '#shopTpl'}
+        ]],
+        done: function(res, curr, count){
             //数字框
             $(".numVal").each(function(){
                 //获得小计 单价
-                var totalTd = $(this).parents("td").siblings().find(".total")[0]
-                    ,totalPrice = $(this).parents("td").siblings().find("span").filter(".price")[0].innerHTML;
+                var totalTd = $(this).parents("td").siblings().find(".total")[0],
+                    totalPrice = $(this).parents("td").siblings().find("span").filter(".price")[0].innerHTML;
+                var checkStatus = table.checkStatus('home-usershop-table');
+                //index代表的第一个还是第二个 button
                 $(this).children("button").each(function(index){
                     //获得数量
                     var numVal = $(this).parent("div").children("input");
                     $(this).on('click', function(){
+                        var oldNumVal = numVal.attr('data-num');
                         if(index == "1"){
                             numVal.val(Number(numVal.val()) + 1);
                         }else{
                             numVal[0].value = numVal[0].value > 1 ? numVal[0].value - 1 : 1;
-                        };
-                        totalTd.innerHTML = '￥' + (numVal.val() * totalPrice.slice(1)).toFixed(2)
+                        }
+                        totalTd.innerHTML = '￥' + (numVal.val() * totalPrice.slice(1)).toFixed(2);
+                        //ajax 替换总数据
+                        var flag = false;
+                        $(checkStatus.data).each(function(){
+                            if(this.goods_id == numVal.attr('data-val')){
+                                flag = true;
+                            }
+                        });
+                        $.post('/purchase/cart?type=editGoodsNum',{'goods_id':numVal.attr('data-val'),'goods_num':numVal.val()},function(res){
+                            if (res.code == 1) {
+                                numVal.attr('data-num',numVal.val());
+                                if(flag){
+                                    var total = ((numVal.val() - oldNumVal) * totalPrice.slice(1)).toFixed(2);
+                                    $('#total').children("span").html(total);
+                                    $('#toCope').children("p").children("big").html(total);
+                                }
+                            }else{
+                                //库存不足 或者 商品不属于自己
+                                numVal.val(oldNumVal);
+                                layer.msg("库存不足！");
+                            }
+                            totalTd.innerHTML = '￥' + (numVal.val() * totalPrice.slice(1)).toFixed(2)
+                        },'json');
                     });
                 });
-                $(this).children("input").on('keydown', function(e){
-                    if(e.keyCode === 13){
-                        e.preventDefault();
-                        this.value = isNaN(this.value) ? 1 : (this.value > 1 ? this.value : 1);
-                        totalTd.innerHTML = '￥' + (this.value * totalPrice.slice(1)).toFixed(2)
-                    };
+                $(this).children("input").on('blur', function(e){
+                    var oldNumVal = $(this).attr('data-num');
+                    var that = $(this);
+                    var flag = false;
+                    $(checkStatus.data).each(function(){
+                        debugger;
+                        if(this.goods_id == $(this).attr('data-val')){
+                            flag = true;
+                        }
+                    });
+                    $.post('/purchase/cart?type=editGoodsNum',{'goods_id':$(this).attr('data-val'),'goods_num':that.val()},function(res){
+                        debugger;
+                        if (res.code == 1) {
+                            $(this).attr('data-num',that.val());
+                            if(flag){
+                                var total = ((that.val() - oldNumVal) * totalPrice.slice(1)).toFixed(2);
+                                $('#total').children("span").html(total);
+                                $('#toCope').children("p").children("big").html(total);
+                            }
+                        }else{
+                            //库存不足 或者 商品不属于自己
+                            layer.msg("库存不足！");
+                            that.val(oldNumVal);
+                        }
+                        totalTd.innerHTML = '￥' + (that.val() * totalPrice.slice(1)).toFixed(2)
+                    },'json');
                 });
             });
-            //合计
-            // totalVal();
-            if($("#house-usershop-table").next("div").find(".layui-none").length != 0){
-                $(".house-usershop-table-num").css("display", "none");
+            if($("#home-usershop-table").next("div").find(".layui-none").length != 0){
+                $(".home-usershop-table-num").css("display", "none");
             };
+            ajaxCarts('carts');
         }
         ,text: {
-            none: '<div class="house-usershop-table-none"><div><img src="/res/static/img/shopnone.png"></div><p>购物车空空如也</p><a class="layui-btn layui-btn-primary" href="/">去逛逛</a></div>'
+            none: '<div class="home-usershop-table-none"><div><img src="/home/images/shopnone.png"></div><p>购物车空空如也</p><a class="layui-btn layui-btn-primary" href="/">去逛逛</a></div>'
         }
-        ,id: 'house-usershop-table'
+        ,id: 'home-usershop-table'
     });
+    //ajax请求
+    function ajaxCarts(type){
+        $.post("/purchase/cart?type=" + type, function(res){
+            $('.totalNum').text(res.data.cart_count);
+            $('#total').children("span").html(res.data.price_total);
+            $('#toCope').children("p").children("big").html(res.data.price_total);
+        },'json');
+    }
     //合计
-    var goodsVal = $(".house-usershop").find("#total").children("span")
-        ,copyWith = $(".house-usershop").find("#toCope").children("p").children("big")
-        ,copyTips = $(".house-usershop").find("#toCope").children("span");
+    var goodsVal = $(".home-usershop").find("#total").children("span"),//总价
+        copyWith = $(".home-usershop").find("#toCope").children("p").children("big"),//应该付的钱
+        copyTips = $(".home-usershop").find("#toCope").children("span");//优惠
     //监听复选框选择 获得总数
-    table.on('checkbox(house-usershop-table)', function(obj){
-        var checkStatus = table.checkStatus('house-usershop-table');
+    table.on('checkbox(home-usershop-table)', function(obj){
+        var checkStatus = table.checkStatus('home-usershop-table');
         goodsVal[0].innerHTML = 0;
+        debugger
         $(checkStatus.data).each(function(){
-            goodsVal[0].innerHTML = parseFloat(this.buynum * this.trueprice.slice(1)) + Number(goodsVal[0].innerHTML);
+            goodsVal[0].innerHTML = parseFloat(this.goods_num * this.member_goods_price) + Number(goodsVal[0].innerHTML);
         });
         //满减
         if(goodsVal[0].innerHTML > 200){
-            copyWith[0].innerHTML = '￥' + (goodsVal[0].innerHTML - 20).toFixed(2)
+            copyWith[0].innerHTML = '￥' + (goodsVal[0].innerHTML - 20).toFixed(2);
             copyTips.css("display", "inline-block");
         }else{
             copyWith[0].innerHTML =  '￥' + parseFloat(goodsVal[0].innerHTML).toFixed(2);
@@ -191,31 +245,31 @@ layui.config({
         //转换格式
         goodsVal[0].innerHTML = parseFloat(goodsVal[0].innerHTML).toFixed(2);
         if(checkStatus.data.length != 0){
-            $(".house-usershop-table-num").children("input")[0].checked = true;
+            $(".home-usershop-table-num").children("input")[0].checked = true;
             form.render('checkbox');
         }else{
-            $(".house-usershop-table-num").children("input")[0].checked = false;
+            $(".home-usershop-table-num").children("input")[0].checked = false;
             form.render('checkbox');
         };
-        $(".house-usershop-table-num").children(".numal").html('已选 ' + checkStatus.data.length + ' 件');
+        $(".home-usershop-table-num").children(".numal").html('已选 ' + checkStatus.data.length + ' 件');
     });
-    table.on('tool(house-usershop-table)', function(obj){
+    table.on('tool(home-usershop-table)', function(obj){
         var data = obj.data;
         if(obj.event === 'del'){
             layer.confirm('确定删除此物品？', function(index){
-                $.post('/plus/car.php?dopost=del',{"ids":data.id},function(res){
+                $.post('/purchase/cart?type=delGoods',{"ids":[data.id]},function(res){
                     if (res.code == 1) {
                         $('.totalNum').text(res.msg);
                         obj.del();
                         layer.close(index);
-                        table.reload('house-usershop-table');
+                        table.reload('home-usershop-table');
                     }
                 },'json');
             });
         }
     });
-    $(".house-usershop").find("#batchDel").on('click', function(){
-        var checkStatus = table.checkStatus('house-usershop-table')
+    $(".home-usershop").find("#batchDel").on('click', function(){
+        var checkStatus = table.checkStatus('home-usershop-table')
             ,checkData = checkStatus.data;
         if(checkData.length === 0){
             layer.msg('请选择数据');
@@ -224,26 +278,26 @@ layui.config({
             for (var i=0;i<checkData.length;i++){
                 ids.push(checkData[i].id)
             }
-            $.post('/plus/car.php?dopost=del',{"ids":ids},function(res){
+            $.post('/purchase/cart?type=delGoods',{"ids":ids},function(res){
                 if (res.code == 1) {
                     $('.totalNum').text(res.msg);
                     //执行 Ajax 操作之后再重载
-                    $(".house-usershop-table-num").children("input")[0].checked = false;
+                    $(".home-usershop-table-num").children("input")[0].checked = false;
                     form.render('checkbox');
-                    $(".house-usershop-table-num").children(".numal").html('已选 0 件')
+                    $(".home-usershop-table-num").children(".numal").html('已选 0 件')
                     copyWith[0].innerHTML = goodsVal[0].innerHTML = '￥0.00';
                     copyTips.css("display", "none");
                     layer.msg("已成功删除购物车中的商品");
-                    table.reload('house-usershop-table');
+                    table.reload('home-usershop-table');
                 }
             },'json');
 
         }
     });
     //初始化
-    var houseNav = $(".house-header").find(".layui-nav");
+    var homeNav = $(".home-header").find(".layui-nav");
     //轮播
-    var elemBanner = $('#house-carousel'), ins1 = carousel.render({
+    var elemBanner = $('#home-carousel'), ins1 = carousel.render({
         elem: elemBanner
         ,width: '100%'
         ,height: elemBanner.height() + 'px'
@@ -257,15 +311,15 @@ layui.config({
         });
     });
     //首页——搜索
-    $(".house-header").find("#search").on('click', function(){
+    $(".home-header").find("#search").on('click', function(){
         layer.open({
             type: 1
             ,title: false
             ,shadeClose: true
             ,area: '300px'
-            ,content: '<div id="house-search" class="layui-form"><input type="text" placeholder="搜索好物" class="layui-input"></div>'
+            ,content: '<div id="home-search" class="layui-form"><input type="text" placeholder="搜索好物" class="layui-input"></div>'
             ,success: function(layero, index){
-                $("#house-search").find("input").on('keydown', function(e){
+                $("#home-search").find("input").on('keydown', function(e){
                     if(e.keyCode === 13){
                         e.preventDefault();
                         layer.close(index);
@@ -275,26 +329,26 @@ layui.config({
         });
     });
     //首页——点击切换
-    $(".house-header").find("#switch").on('click', function(){
-        if(houseNav.hasClass("close")){
-            $(".house-header").children(".layui-container")[0].style.height = 60 + houseNav[0].offsetHeight + 'px';
-            houseNav.removeClass("close");
+    $(".home-header").find("#switch").on('click', function(){
+        if(homeNav.hasClass("close")){
+            $(".home-header").children(".layui-container")[0].style.height = 60 + homeNav[0].offsetHeight + 'px';
+            homeNav.removeClass("close");
         }
         else{
-            $(".house-header").children(".layui-container")[0].style.height = 50 + 'px';
-            houseNav.addClass("close");
+            $(".home-header").children(".layui-container")[0].style.height = 50 + 'px';
+            homeNav.addClass("close");
         }
     });
     //列表页——点击切换
-    $(".house-list").children(".filter").find("ul").each(function(){
+    $(".home-list").children(".filter").find("ul").each(function(){
         $(this).children("li").on('click', function(){
             $(this).addClass("active").siblings().removeClass("active");
         });
     });
     //详情页——图片选择
-    var imgDetail = $(".house-detail").find(".intro-img").children("img")[0]
+    var imgDetail = $(".home-detail").find(".intro-img").children("img")[0]
         ,srcDetail = $(imgDetail).attr("src")
-        ,ulDetail = $(".house-detail").find(".thumb");
+        ,ulDetail = $(".home-detail").find(".thumb");
     ulDetail.children("li").each(function(){
         $(this).on('mouseenter', function(){
             imgDetail.src = $(this).children("img")[0].src;
@@ -303,7 +357,7 @@ layui.config({
         });
     });
     //详情页——点击切换
-    $(".house-detail").find(".shopChoose").find("dl").each(function(){
+    $(".home-detail").find(".shopChoose").find("dl").each(function(){
         $(this).children("dd").on('click', function(){
             $(this).addClass("active").siblings().removeClass("active");
             $(this).append('<i class="layui-icon layui-icon-ok active"></i>');
@@ -318,13 +372,13 @@ layui.config({
         ,layout: ['page', 'next']
     });
     //详情页——收藏
-    $(".house-detail").find(".shopChoose").find(".collect").on('click', function(){
+    $(".home-detail").find(".shopChoose").find(".collect").on('click', function(){
         $(this).find("#collect").addClass("layui-icon-rate-solid").removeClass("layui-icon-rate");
         $(this).find("#collect")[0].style.color = '#dbbb92';
         layer.msg('已收藏');
     });
     //我的收藏——点击切换
-    $(".house-usercol").find(".user-list").children("li").each(function(){
+    $(".home-usercol").find(".user-list").children("li").each(function(){
         $(this).on('click', function(){
             $(this).addClass("active").siblings().removeClass("active");
         });
@@ -337,7 +391,7 @@ layui.config({
         ,layout: ['page', 'next']
     });
     //我的收藏——删除
-    $(".house-usercol").find(".layui-tab-content").find(".goods").each(function(){
+    $(".home-usercol").find(".layui-tab-content").find(".goods").each(function(){
         $(this).children(".del").on('click', function(){
             $(this).parent("div").parent("div").remove();
         });
@@ -401,7 +455,7 @@ layui.config({
     });
     //个人中心——订单
     table.render({
-        elem: '#house-user-order'
+        elem: '#home-user-order'
         ,url:  'shops_orders.php?dopost=order'
         ,skin: 'line'
         ,cols: [[
@@ -413,7 +467,7 @@ layui.config({
             ,{title:'订单操作', align:'center', templet: '#handleTpl', width:120}
         ]]
     });
-    table.on('tool(house-user-order)', function(obj){
+    table.on('tool(home-user-order)', function(obj){
         var data = obj.data;
         if(obj.event === 'check'){
             layer.open({
@@ -439,5 +493,5 @@ layui.config({
             }
         }
     });
-    exports('house', {});
+    exports('home', {});
 })

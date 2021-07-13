@@ -7,7 +7,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link rel="stylesheet" href="{{ asset('home/css/layui.css') }}">
     <link rel="stylesheet" href="{{ asset('home/css/index.css') }}">
-    <link rel="stylesheet" href="{{ asset('home/css/layer.css') }}">
     <script src="{{ asset('xadmin/lib/layui/layui.js') }}"></script>
     <!--[if lt IE 9]>
     <script src="{{ asset('home/js/html5.js') }}"></script>
@@ -26,6 +25,6 @@
 <script src="{{ asset('home/js/lightbox-plus-jquery.min.js') }}"></script>
 <!-- carousel -->
 <script src="{{ asset('home/owl-carousel/owl.carousel.js') }}"></script>
-<script>layui.config({base:"home/js/"}).use("home")</script>
+<script>layui.config({base:"/home/js/"}).use("home")</script>
 </body>
 </html>

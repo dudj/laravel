@@ -1,22 +1,22 @@
 @section('home_footer')
     <footer>
-        <div class="house-footer">
+        <div class="home-footer">
             <div class="layui-container">
                 <div class="intro">
                     <span class="first">
-                        <i class="layui-icon layui-icon-house-shield"></i>
+                        <i class="layui-icon layui-icon-home-shield"></i>
                         7天无理由退换货
                     </span>
                     <span class="second">
-                        <i class="layui-icon layui-icon-house-car"></i>
+                        <i class="layui-icon layui-icon-home-car"></i>
                         满199元全场包邮
                     </span>
                     <span class="third">
-                        <i class="layui-icon layui-icon-house-diamond"></i>
+                        <i class="layui-icon layui-icon-home-diamond"></i>
                         100%品质保证
                     </span>
                     <span class="last">
-                        <i class="layui-icon layui-icon-house-tel"></i>
+                        <i class="layui-icon layui-icon-home-tel"></i>
                         客服400-8888-888
                     </span>
                 </div>
